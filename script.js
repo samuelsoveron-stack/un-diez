@@ -28,6 +28,12 @@ document.addEventListener("DOMContentLoaded", () => {
     el.href = buildWhatsAppUrl(mensajeCombo(combo));
   });
 
+  // Botones de combos mayoristas, con mensaje literal preconfigurado
+  document.querySelectorAll(".btn-mayorista").forEach((el) => {
+    const mensaje = el.getAttribute("data-mensaje");
+    el.href = buildWhatsAppUrl(mensaje);
+  });
+
   // QR que abre el chat genérico de WhatsApp
   const qrImg = document.getElementById("qr-code");
   if (qrImg) {

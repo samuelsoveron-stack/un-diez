@@ -190,6 +190,46 @@
     animation: float 6s ease-in-out infinite;
     pointer-events: none;
   }
+
+  /* ===== COMBOS: collage de ingredientes reales, no un plato armado ===== */
+  .ingredient-collage {
+    display: grid;
+    gap: 2px;
+    background: linear-gradient(135deg, #F3A730, #E4342B);
+    position: relative;
+  }
+  .ingredient-collage > div {
+    position: relative;
+    overflow: hidden;
+    background: #0f0d0b;
+  }
+  .ingredient-collage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(1.15) contrast(1.05) brightness(1.02);
+  }
+  .ingredient-collage .ingredient-tag {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    background: rgba(15,13,11,0.72);
+    backdrop-filter: blur(2px);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    padding: 3px 9px;
+    border-radius: 9999px;
+    text-transform: uppercase;
+  }
+  .ingredient-collage::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 -18px 30px -12px rgba(0,0,0,0.55);
+    pointer-events: none;
+  }
 </style>
 </head>
 <body class="text-white antialiased">
@@ -206,11 +246,20 @@
         <span class="text-[11px] text-white/60 -mt-0.5">Directo de Fábrica · Villa Ballester</span>
       </div>
     </div>
-    <a id="wa-header" href="#" target="_blank" rel="noopener"
-       class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 transition-colors text-white font-semibold text-sm sm:text-base px-4 py-2.5 rounded-full shadow-lg shadow-green-900/30">
-      <svg viewBox="0 0 32 32" class="w-5 h-5 fill-white shrink-0"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.696 4.611 1.897 6.481L4 29l7.72-1.865A11.94 11.94 0 0 0 16.001 27C22.629 27 28 21.627 28 15S22.629 3 16.001 3zm6.938 17.06c-.297.836-1.474 1.53-2.415 1.73-.642.136-1.48.244-4.3-.923-3.61-1.494-5.933-5.156-6.114-5.394-.174-.238-1.463-1.948-1.463-3.716 0-1.768.923-2.636 1.252-2.998.297-.325.65-.407.868-.407.218 0 .437.002.628.012.201.01.47-.076.735.561.297.716 1.01 2.484 1.098 2.665.089.18.148.393.03.63-.119.238-.178.386-.356.594-.178.208-.375.464-.535.624-.178.178-.363.371-.156.727.208.356.923 1.523 1.982 2.467 1.362 1.214 2.51 1.59 2.865 1.77.356.18.564.15.772-.09.208-.238.892-1.038 1.13-1.394.238-.356.475-.297.802-.178.327.119 2.078.98 2.435 1.157.356.178.594.267.68.416.089.148.089.856-.208 1.692z"/></svg>
-      <span>Pedir por WhatsApp</span>
-    </a>
+    <div class="flex items-center gap-3 sm:gap-5">
+      <a href="mayoristas/" class="hidden sm:inline-flex items-center gap-1.5 text-white/80 hover:text-diezgold transition-colors text-sm font-semibold">
+        <svg viewBox="0 0 24 24" class="w-4 h-4 fill-diezgold shrink-0"><path d="M4 4h16l-1.5 9h-13L4 4zm0 0L3.2 2H1v2h1l.4 2M7 20a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm10 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>
+        Mayoristas
+      </a>
+      <a href="mayoristas/" class="sm:hidden inline-flex items-center text-white/80 hover:text-diezgold transition-colors text-xs font-bold uppercase tracking-wide">
+        Mayoristas
+      </a>
+      <a id="wa-header" href="#" target="_blank" rel="noopener"
+         class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 transition-colors text-white font-semibold text-sm sm:text-base px-4 py-2.5 rounded-full shadow-lg shadow-green-900/30">
+        <svg viewBox="0 0 32 32" class="w-5 h-5 fill-white shrink-0"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.696 4.611 1.897 6.481L4 29l7.72-1.865A11.94 11.94 0 0 0 16.001 27C22.629 27 28 21.627 28 15S22.629 3 16.001 3zm6.938 17.06c-.297.836-1.474 1.53-2.415 1.73-.642.136-1.48.244-4.3-.923-3.61-1.494-5.933-5.156-6.114-5.394-.174-.238-1.463-1.948-1.463-3.716 0-1.768.923-2.636 1.252-2.998.297-.325.65-.407.868-.407.218 0 .437.002.628.012.201.01.47-.076.735.561.297.716 1.01 2.484 1.098 2.665.089.18.148.393.03.63-.119.238-.178.386-.356.594-.178.208-.375.464-.535.624-.178.178-.363.371-.156.727.208.356.923 1.523 1.982 2.467 1.362 1.214 2.51 1.59 2.865 1.77.356.18.564.15.772-.09.208-.238.892-1.038 1.13-1.394.238-.356.475-.297.802-.178.327.119 2.078.98 2.435 1.157.356.178.594.267.68.416.089.148.089.856-.208 1.692z"/></svg>
+        <span>Pedir por WhatsApp</span>
+      </a>
+    </div>
   </div>
 </header>
 
@@ -316,8 +365,15 @@
   <div class="grid sm:grid-cols-2 gap-6">
 
     <div class="card-hover combo-card rounded-3xl bg-diezcard border border-white/10 overflow-hidden flex flex-col" data-aos="fade-up" data-aos-duration="700">
-      <div class="food-frame aspect-[16/10] overflow-hidden">
-        <img src="assets/medallones-fabrica.jpg" alt="10 Carnes y 10 Panes de papa" class="w-full h-full object-cover">
+      <div class="ingredient-collage aspect-[16/10]" style="grid-template-columns: 1fr 1fr;">
+        <div>
+          <img src="assets/medallones-fabrica.jpg" alt="10 medallones de carne fresca">
+          <span class="ingredient-tag">Carne</span>
+        </div>
+        <div>
+          <img src="assets/pan-sesamo.jpg" alt="10 panes de papa">
+          <span class="ingredient-tag">Pan de Papa</span>
+        </div>
       </div>
       <div class="p-7 sm:p-8 flex flex-col flex-1">
         <span class="crown-badge inline-block w-fit text-diezdark text-xs font-bold px-3 py-1 rounded-full mb-4">COMBO 1</span>
@@ -336,8 +392,19 @@
 
     <div class="card-hover combo-card rounded-3xl bg-diezcard border border-diezgold/40 overflow-hidden flex flex-col relative" data-aos="fade-up" data-aos-duration="700" data-aos-delay="150">
       <span class="absolute top-3 right-3 z-10 bg-diezred text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-lg">CON CHEDDAR</span>
-      <div class="food-frame aspect-[16/10] overflow-hidden">
-        <img src="assets/burger-cheddar-smash.webp" alt="10 Carnes, 10 Panes y 10 Fetas de Cheddar" class="w-full h-full object-cover">
+      <div class="ingredient-collage aspect-[16/10]" style="grid-template-columns: 1fr 1fr 1fr;">
+        <div>
+          <img src="assets/medallones-fabrica.jpg" alt="10 medallones de carne fresca">
+          <span class="ingredient-tag">Carne</span>
+        </div>
+        <div>
+          <img src="assets/pan-sesamo.jpg" alt="10 panes de papa">
+          <span class="ingredient-tag">Pan de Papa</span>
+        </div>
+        <div>
+          <img src="assets/burger-cheddar-smash.webp" alt="10 fetas de queso Cheddar" style="object-position: 50% 25%; transform: scale(1.8);">
+          <span class="ingredient-tag">Cheddar</span>
+        </div>
       </div>
       <div class="p-7 sm:p-8 flex flex-col flex-1">
         <span class="crown-badge inline-block w-fit text-diezdark text-xs font-bold px-3 py-1 rounded-full mb-4">COMBO 2</span>
@@ -457,6 +524,25 @@
        class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 transition-colors font-bold text-base px-8 py-4 rounded-full">
       <svg viewBox="0 0 32 32" class="w-5 h-5 fill-white shrink-0"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.696 4.611 1.897 6.481L4 29l7.72-1.865A11.94 11.94 0 0 0 16.001 27C22.629 27 28 21.627 28 15S22.629 3 16.001 3zm6.938 17.06c-.297.836-1.474 1.53-2.415 1.73-.642.136-1.48.244-4.3-.923-3.61-1.494-5.933-5.156-6.114-5.394-.174-.238-1.463-1.948-1.463-3.716 0-1.768.923-2.636 1.252-2.998.297-.325.65-.407.868-.407.218 0 .437.002.628.012.201.01.47-.076.735.561.297.716 1.01 2.484 1.098 2.665.089.18.148.393.03.63-.119.238-.178.386-.356.594-.178.208-.375.464-.535.624-.178.178-.363.371-.156.727.208.356.923 1.523 1.982 2.467 1.362 1.214 2.51 1.59 2.865 1.77.356.18.564.15.772-.09.208-.238.892-1.038 1.13-1.394.238-.356.475-.297.802-.178.327.119 2.078.98 2.435 1.157.356.178.594.267.68.416.089.148.089.856-.208 1.692z"/></svg>
       Hola, quiero hacer un pedido
+    </a>
+  </div>
+</section>
+
+<!-- BANNER MAYORISTAS -->
+<section class="border-t border-white/10 bg-diezcard">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center gap-5 sm:gap-6 text-center sm:text-left" data-aos="fade-up">
+    <span class="w-14 h-14 shrink-0 rounded-full bg-diezgold/10 border-2 border-diezgold/40 flex items-center justify-center">
+      <svg viewBox="0 0 24 24" class="w-7 h-7 fill-diezgold"><path d="M4 4h16l-1.5 9h-13L4 4zm0 0L3.2 2H1v2h1l.4 2M7 20a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm10 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>
+    </span>
+    <div class="flex-1">
+      <h2 class="font-display font-bold text-lg sm:text-xl">
+        ¿Querés vender <span class="text-gradient">UN DIEZ</span> en tu zona?
+      </h2>
+      <p class="text-white/60 text-sm mt-1">Conocé nuestra propuesta para vendedores mayoristas.</p>
+    </div>
+    <a href="mayoristas/" class="shrink-0 inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-diezgold/40 text-diezgold transition-colors font-bold text-sm px-6 py-3 rounded-full">
+      Ver Sección Mayoristas
+      <svg viewBox="0 0 24 24" class="w-4 h-4 fill-diezgold shrink-0"><path d="M9 6l6 6-6 6"/></svg>
     </a>
   </div>
 </section>
