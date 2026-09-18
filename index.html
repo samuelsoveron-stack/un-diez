@@ -66,8 +66,6 @@
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-16px); }
   }
-  .float-anim { animation: float 4.5s ease-in-out infinite; }
-
   @keyframes pulse-ring {
     0% { transform: scale(0.9); opacity: 0.7; }
     70% { transform: scale(1.7); opacity: 0; }
@@ -123,13 +121,6 @@
     100% { transform: translateY(-520px) translateX(var(--drift, 20px)); opacity: 0; }
   }
 
-  .garnish {
-    position: absolute;
-    opacity: 0.18;
-    filter: blur(1px);
-    animation: float 7s ease-in-out infinite;
-  }
-
   /* Badge de ubicación premium */
   .badge-premium {
     position: relative;
@@ -149,19 +140,6 @@
     mask-composite: exclude;
     opacity: 0.7;
   }
-
-  /* Sello "100% Carne de Fábrica" */
-  .quality-seal {
-    animation: float 5s ease-in-out infinite;
-    animation-delay: 0.4s;
-  }
-
-  /* Brillo de la corona */
-  @keyframes crown-shine {
-    0%, 100% { filter: drop-shadow(0 0 0px rgba(243,167,48,0)); }
-    50% { filter: drop-shadow(0 0 10px rgba(243,167,48,0.75)); }
-  }
-  .crown-shine { animation: crown-shine 3s ease-in-out infinite; }
 
   /* ===== GALERIA: fusionar la foto con la tarjeta oscura ===== */
   .food-frame {
@@ -268,7 +246,7 @@
 
   <!-- foto real de fondo: producto protagonista -->
   <div class="absolute inset-0">
-    <img src="assets/medallones-fabrica.jpg" alt="Medallones de carne recién preparados y pan de papa, directo de fábrica"
+    <img src="assets/hero-insumos.png" alt="Medallones de carne, pan de papa y cheddar, directo de fábrica"
          class="w-full h-full object-cover opacity-60 sm:opacity-100" style="object-position: 75% 50%;">
     <div class="absolute inset-0 bg-gradient-to-r from-diezdark via-diezdark/85 sm:via-diezdark/60 to-diezdark/20"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-diezdark via-transparent to-diezdark/40"></div>
@@ -304,13 +282,7 @@
         Ideal para compartir en familia, con amigos, en juntadas o cumpleaños.
       </p>
 
-      <!-- sello de calidad -->
-      <div class="quality-seal inline-flex items-center gap-2 mt-6 mb-2 border border-diezgold/40 bg-diezgold/10 text-diezgold text-[11px] sm:text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
-        <svg viewBox="0 0 24 24" class="w-4 h-4 fill-diezgold shrink-0"><path d="M12 1l2.6 5.27 5.82.85-4.21 4.1.99 5.78L12 14.9l-5.2 2.1.99-5.78-4.21-4.1 5.82-.85L12 1z"/></svg>
-        100% Carne de Fábrica
-      </div>
-
-      <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+      <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
         <a id="wa-hero" href="#" target="_blank" rel="noopener"
            class="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 transition-colors font-bold text-base px-7 py-4 rounded-full glow-red">
           <svg viewBox="0 0 32 32" class="w-5 h-5 fill-white shrink-0"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.696 4.611 1.897 6.481L4 29l7.72-1.865A11.94 11.94 0 0 0 16.001 27C22.629 27 28 21.627 28 15S22.629 3 16.001 3zm6.938 17.06c-.297.836-1.474 1.53-2.415 1.73-.642.136-1.48.244-4.3-.923-3.61-1.494-5.933-5.156-6.114-5.394-.174-.238-1.463-1.948-1.463-3.716 0-1.768.923-2.636 1.252-2.998.297-.325.65-.407.868-.407.218 0 .437.002.628.012.201.01.47-.076.735.561.297.716 1.01 2.484 1.098 2.665.089.18.148.393.03.63-.119.238-.178.386-.356.594-.178.208-.375.464-.535.624-.178.178-.363.371-.156.727.208.356.923 1.523 1.982 2.467 1.362 1.214 2.51 1.59 2.865 1.77.356.18.564.15.772-.09.208-.238.892-1.038 1.13-1.394.238-.356.475-.297.802-.178.327.119 2.078.98 2.435 1.157.356.178.594.267.68.416.089.148.089.856-.208 1.692z"/></svg>
@@ -329,7 +301,7 @@
 <section class="bg-diezcard border-y border-white/5">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14 grid md:grid-cols-2 gap-8 items-center">
     <div class="rounded-2xl overflow-hidden aspect-[16/10] card-hover" data-aos="fade-right" data-aos-duration="700">
-      <img src="assets/pan-sesamo.jpg" alt="Bandejas de pan de papa recién horneado, producción de fábrica" class="w-full h-full object-cover">
+      <img src="assets/banner-directo-fabrica.png" alt="Carnes, panes de papa y cheddar en la producción de fábrica" class="w-full h-full object-cover">
     </div>
     <div data-aos="fade-left" data-aos-duration="700" data-aos-delay="100" class="text-center md:text-left">
       <span class="text-diezgold text-xs sm:text-sm font-bold uppercase tracking-widest">01 — Directo de Fábrica</span>
