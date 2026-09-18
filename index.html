@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UN DIEZ · Hamburguesas Directo de Fábrica</title>
+<meta name="description" content="Hamburguesas UN DIEZ, directo de fábrica en Villa Ballester. Combos de 10 carnes y 10 panes. Pedí por WhatsApp.">
+<link rel="icon" type="image/png" href="assets/logo-un-diez.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          diezred: '#E4342B',
+          diezgold: '#F3A730',
+          diezdark: '#111111',
+          diezcard: '#1B1B1B'
+        },
+        fontFamily: {
+          display: ['Outfit', 'sans-serif'],
+          body: ['Inter', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { background-color: #111111; font-family: 'Inter', sans-serif; }
+  h1, h2, h3, .font-display { font-family: 'Outfit', sans-serif; }
+  .text-gradient {
+    background: linear-gradient(90deg, #F3A730 0%, #E4342B 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .glow-red { box-shadow: 0 0 40px -10px rgba(228, 52, 43, 0.5); }
+  .glow-gold { box-shadow: 0 0 40px -10px rgba(243, 167, 48, 0.4); }
+  .crown-badge {
+    background: linear-gradient(135deg, #F3A730 0%, #E4342B 100%);
+  }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #111111; }
+  ::-webkit-scrollbar-thumb { background: #E4342B; border-radius: 4px; }
+
+  /* Logo: recorte circular estricto — la imagen original trae un fondo
+     cuadrado con cuadrícula "falsa transparencia" que hay que ocultar. */
+  .logo-badge {
+    border-radius: 9999px;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    flex-shrink: 0;
+  }
+  .logo-badge img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.08);
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-16px); }
+  }
+  .float-anim { animation: float 4.5s ease-in-out infinite; }
+
+  @keyframes pulse-ring {
+    0% { transform: scale(0.9); opacity: 0.7; }
+    70% { transform: scale(1.7); opacity: 0; }
+    100% { transform: scale(1.7); opacity: 0; }
+  }
+  .pulse-ring::before, .pulse-ring::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: #25D366;
+    animation: pulse-ring 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    z-index: -1;
+  }
+  .pulse-ring::after { animation-delay: 1.1s; }
+
+  .card-hover {
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-6px) scale(1.03);
+  }
+  .combo-card:hover {
+    box-shadow: 0 20px 45px -15px rgba(228, 52, 43, 0.45);
+    border-color: rgba(243, 167, 48, 0.5);
+  }
+  .gallery-card:hover {
+    box-shadow: 0 20px 45px -15px rgba(243, 167, 48, 0.35);
+  }
+
+  /* ===== HERO: fondo industrial + brasas ascendiendo ===== */
+  .hero-texture {
+    background-image:
+      radial-gradient(circle at 10% 90%, rgba(255,255,255,0.03), transparent 40%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.018) 0px, rgba(255,255,255,0.018) 1px, transparent 1px, transparent 10px),
+      linear-gradient(180deg, #0d0d0d 0%, #111111 60%, #0a0a0a 100%);
+  }
+  .ember {
+    position: absolute;
+    bottom: -20px;
+    border-radius: 9999px;
+    background: radial-gradient(circle, #F3A730 0%, #E4342B 70%, transparent 100%);
+    opacity: 0;
+    filter: blur(0.3px);
+    animation: ember-rise linear infinite;
+  }
+  @keyframes ember-rise {
+    0% { transform: translateY(0) translateX(0); opacity: 0; }
+    10% { opacity: 0.85; }
+    100% { transform: translateY(-520px) translateX(var(--drift, 20px)); opacity: 0; }
+  }
+
+  .garnish {
+    position: absolute;
+    opacity: 0.18;
+    filter: blur(1px);
+    animation: float 7s ease-in-out infinite;
+  }
+
+  /* Badge de ubicación premium */
+  .badge-premium {
+    position: relative;
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 1px solid transparent;
+    background-clip: padding-box;
+  }
+  .badge-premium::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(120deg, #F3A730, rgba(228,52,43,0.6), #F3A730);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.7;
+  }
+
+  /* Sello "100% Carne de Fábrica" */
+  .quality-seal {
+    animation: float 5s ease-in-out infinite;
+    animation-delay: 0.4s;
+  }
+
+  /* Brillo de la corona */
+  @keyframes crown-shine {
+    0%, 100% { filter: drop-shadow(0 0 0px rgba(243,167,48,0)); }
+    50% { filter: drop-shadow(0 0 10px rgba(243,167,48,0.75)); }
+  }
+  .crown-shine { animation: crown-shine 3s ease-in-out infinite; }
+
+  /* ===== GALERIA: fusionar la foto con la tarjeta oscura ===== */
+  .food-frame {
+    position: relative;
+    background: radial-gradient(circle at 50% 35%, #2a1f16 0%, #171310 55%, #0f0d0b 100%);
+  }
+  .food-frame img {
+    -webkit-mask-image: radial-gradient(ellipse 68% 62% at 50% 46%, #000 60%, transparent 100%);
+    mask-image: radial-gradient(ellipse 68% 62% at 50% 46%, #000 60%, transparent 100%);
+    filter: saturate(1.25) contrast(1.08) brightness(1.05);
+  }
+  .food-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 -30px 40px -20px rgba(0,0,0,0.65), inset 0 0 60px rgba(0,0,0,0.35);
+    pointer-events: none;
+  }
+  .food-frame .steam {
+    position: absolute;
+    bottom: 38%;
+    width: 40%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(255,255,255,0.16) 0%, transparent 70%);
+    filter: blur(6px);
+    animation: float 6s ease-in-out infinite;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body class="text-white antialiased">
+
+<!-- HEADER -->
+<header class="sticky top-0 z-50 bg-diezdark/90 backdrop-blur-md border-b border-white/10">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <div class="logo-badge h-11 w-11 sm:h-12 sm:w-12">
+        <img src="assets/logo-un-diez.png" alt="UN DIEZ">
+      </div>
+      <div class="hidden sm:flex flex-col leading-tight">
+        <span class="font-display font-extrabold text-lg tracking-tight">UN DIEZ</span>
+        <span class="text-[11px] text-white/60 -mt-0.5">Directo de Fábrica · Villa Ballester</span>
+      </div>
+    </div>
+    <a id="wa-header" href="#" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 transition-colors text-white font-semibold text-sm sm:text-base px-4 py-2.5 rounded-full shadow-lg shadow-green-900/30">
+      <svg viewBox="0 0 32 32" class="w-5 h-5 fill-white shrink-0"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.696 4.611 1.897 6.481L4 29l7.72-1.865A11.94 11.94 0 0 0 16.001 27C22.629 27 28 21.627 28 15S22.629 3 16.001 3zm6.938 17.06c-.297.836-1.474 1.53-2.415 1.73-.642.136-1.48.244-4.3-.923-3.61-1.494-5.933-5.156-6.114-5.394-.174-.238-1.463-1.948-1.463-3.716 0-1.768.923-2.636 1.252-2.998.297-.325.65-.407.868-.407.218 0 .437.002.628.012.201.01.47-.076.735.561.297.716 1.01 2.484 1.098 2.665.089.18.148.393.03.63-.119.238-.178.386-.356.594-.178.208-.375.464-.535.624-.178.178-.363.371-.156.727.208.356.923 1.523 1.982 2.467 1.362 1.214 2.51 1.59 2.865 1.77.356.18.564.15.772-.09.208-.238.892-1.038 1.13-1.394.238-.356.475-.297.802-.178.327.119 2.078.98 2.435 1.157.356.178.594.267.68.416.089.148.089.856-.208 1.692z"/></svg>
+      <span>Pedir por WhatsApp</span>
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero-texture relative overflow-hidden">
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(228,52,43,0.22),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(243,167,48,0.18),transparent_40%)]"></div>
+
+  <!-- brasas ascendiendo -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <span class="ember" style="left:8%;  width:5px;  height:5px;  --drift:14px; animation-duration:7s;  animation-delay:0s;"></span>
+    <span class="ember" style="left:18%; width:3px;  height:3px;  --drift:-10px; animation-duration:9s;  animation-delay:2s;"></span>
+    <span class="ember" style="left:32%; width:4px;  height:4px;  --drift:18px; animation-duration:6.5s;animation-delay:1s;"></span>
+    <span class="ember" style="left:64%; width:4px;  height:4px;  --drift:-16px; animation-duration:8s;  animation-delay:3s;"></span>
+    <span class="ember" style="left:78%; width:3px;  height:3px;  --drift:12px; animation-duration:7.5s;animation-delay:1.5s;"></span>
+    <span class="ember" style="left:90%; width:5px;  height:5px;  --drift:-14px; animation-duration:9.5s;animation-delay:0.5s;"></span>
+  </div>
+
+  <!-- guarniciones decorativas flotando en los extremos -->
+  <svg class="garnish hidden sm:block" style="top:12%; left:4%; width:70px;" viewBox="0 0 100 100" aria-hidden="true">
+    <g fill="#F3A730">
+      <ellipse cx="20" cy="20" rx="4" ry="2.5"/><ellipse cx="40" cy="12" rx="4" ry="2.5"/>
+      <ellipse cx="60" cy="28" rx="4" ry="2.5"/><ellipse cx="15" cy="45" rx="4" ry="2.5"/>
+      <ellipse cx="50" cy="50" rx="4" ry="2.5"/><ellipse cx="75" cy="55" rx="4" ry="2.5"/>
+    </g>
+  </svg>
+  <svg class="garnish hidden sm:block" style="bottom:16%; right:6%; width:90px; animation-delay:1.2s;" viewBox="0 0 100 100" aria-hidden="true">
+    <path d="M50 10 C20 20 15 55 40 80 C50 90 60 85 55 75 C75 70 85 40 60 15 C57 12 53 10 50 10 Z" fill="#7CA65A"/>
+  </svg>
+
+  <div class="relative max-w-6xl mx-auto px-4 sm:px-6 pt-14 pb-16 sm:pt-20 sm:pb-24 grid md:grid-cols-2 gap-10 items-center">
+    <div class="text-center md:text-left" data-aos="fade-right" data-aos-duration="800">
+
+      <span class="badge-premium inline-flex items-center gap-2 text-diezgold text-xs sm:text-sm font-semibold px-4 py-2 rounded-full mb-6">
+        <svg viewBox="0 0 24 24" class="w-4 h-4 fill-diezgold shrink-0"><path d="M12 2C7.86 2 4.5 5.36 4.5 9.5c0 5.5 6.24 11.4 7.02 12.12a.72.72 0 0 0 .96 0C13.26 20.9 19.5 15 19.5 9.5 19.5 5.36 16.14 2 12 2zm0 10.25a2.75 2.75 0 1 1 0-5.5 2.75 2.75 0 0 1 0 5.5z"/></svg>
+        <span class="tracking-wide uppercase">Directo de Fábrica · Villa Ballester</span>
+      </span>
+
+      <h1 class="font-display font-black text-4xl sm:text-5xl lg:text-6xl leading-[1.05] tracking-tight">
+        Hamburguesas<br>
+        Nivel <span class="text-gradient drop-shadow-[0_6px_20px_rgba(228,52,43,0.35)]">UN DIEZ</span>
+      </h1>
+
+      <div class="mt-5 flex items-center justify-center md:justify-start gap-3">
+        <p class="text-white/70 text-base sm:text-lg max-w-md">
+          Directo de fábrica a tu mesa · Envíos desde Villa Ballester
+        </p>
+      </div>
+
+      <!-- sello de calidad -->
+      <div class="quality-seal inline-flex items-center gap-2 mt-6 mb-2 border border-diezgold/40 bg-diezgold/10 text-diezgold text-[11px] sm:text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
+        <svg viewBox="0 0 24 24" class="w-4 h-4 fill-diezgold shrink-0"><path d="M12 1l2.6 5.27 5.82.85-4.21 4.1.99 5.78L12 14.9l-5.2 2.1.99-5.78-4.21-4.1 5.82-.85L12 1z"/></svg>
+        100% Carne de Fábrica
+      </div>
+
+      <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+        <a id="wa-hero" href="#" target="_blank" rel="noopener"
+           class="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 transition-colors font-bold text-base px-7 py-4 rounded-full glow-red">
+          <svg viewBox="0 0 32 32" class="w-5 h-5 fill-white shrink-0"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.696 4.611 1.897 6.481L4 29l7.72-1.865A11.94 11.94 0 0 0 16.001 27C22.629 27 28 21.627 28 15S22.629 3 16.001 3zm6.938 17.06c-.297.836-1.474 1.53-2.415 1.73-.642.136-1.48.244-4.3-.923-3.61-1.494-5.933-5.156-6.114-5.394-.174-.238-1.463-1.948-1.463-3.716 0-1.768.923-2.636 1.252-2.998.297-.325.65-.407.868-.407.218 0 .437.002.628.012.201.01.47-.076.735.561.297.716 1.01 2.484 1.098 2.665.089.18.148.393.03.63-.119.238-.178.386-.356.594-.178.208-.375.464-.535.624-.178.178-.363.371-.156.727.208.356.923 1.523 1.982 2.467 1.362 1.214 2.51 1.59 2.865 1.77.356.18.564.15.772-.09.208-.238.892-1.038 1.13-1.394.238-.356.475-.297.802-.178.327.119 2.078.98 2.435 1.157.356.178.594.267.68.416.089.148.089.856-.208 1.692z"/></svg>
+          Hacer Pedido por WhatsApp
+        </a>
+        <a href="#combos" class="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/15 transition-colors font-semibold text-base px-7 py-4 rounded-full">
+          Ver Combos
+        </a>
+      </div>
+    </div>
+
+    <div class="relative flex justify-center" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="150">
+      <div class="absolute w-64 h-64 sm:w-80 sm:h-80 bg-diezred/30 rounded-full blur-3xl"></div>
+
+      <div class="float-anim relative w-56 sm:w-72 lg:w-80">
+        <div class="logo-badge crown-shine relative drop-shadow-2xl">
+          <img src="assets/logo-un-diez.png" alt="UN DIEZ - hamburguesa con corona">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMBOS -->
+<section id="combos" class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+  <div class="text-center max-w-xl mx-auto mb-10" data-aos="fade-up">
+    <h2 class="font-display font-extrabold text-3xl sm:text-4xl">Nuestros Combos</h2>
+    <p class="mt-3 text-white/60">Elegí tu combo y pedilo directo por WhatsApp, ya con el mensaje listo.</p>
+  </div>
+  <div class="grid sm:grid-cols-2 gap-6">
+
+    <div class="card-hover combo-card rounded-3xl bg-diezcard border border-white/10 p-7 sm:p-8 flex flex-col" data-aos="fade-up" data-aos-duration="700">
+      <span class="crown-badge inline-block w-fit text-diezdark text-xs font-bold px-3 py-1 rounded-full mb-4">COMBO 1</span>
+      <h3 class="font-display font-bold text-2xl">10 Carnes + 10 Panes</h3>
+      <p class="mt-2 text-white/60 text-sm flex-1">Los medallones y el pan de papa que ya conocés, directo de fábrica.</p>
+      <div class="mt-6 flex items-end justify-between">
+        <span class="font-display font-black text-3xl sm:text-4xl text-diezgold">$20.000<span class="text-base font-semibold text-white/50">.-</span></span>
+      </div>
+      <a href="#" class="btn-combo mt-6 inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 transition-colors font-bold px-6 py-3.5 rounded-full"
+         data-combo="Combo: 10 Carnes + 10 Panes ($20.000)" target="_blank" rel="noopener">
+        Pedir este combo
+      </a>
+    </div>
+
+    <div class="card-hover combo-card rounded-3xl bg-diezcard border border-diezgold/40 p-7 sm:p-8 flex flex-col relative overflow-hidden" data-aos="fade-up" data-aos-duration="700" data-aos-delay="150">
+      <span class="absolute top-0 right-0 bg-diezred text-white text-[11px] font-bold px-3 py-1 rounded-bl-xl">CON CHEDDAR</span>
+      <span class="crown-badge inline-block w-fit text-diezdark text-xs font-bold px-3 py-1 rounded-full mb-4">COMBO 2</span>
+      <h3 class="font-display font-bold text-2xl">10 Carnes + 10 Panes + Cheddar</h3>
+      <p class="mt-2 text-white/60 text-sm flex-1">La misma base del Combo 1, con cheddar derretido incluido.</p>
+      <div class="mt-6 flex items-end justify-between">
+        <span class="font-display font-black text-3xl sm:text-4xl text-diezgold">$25.000<span class="text-base font-semibold text-white/50">.-</span></span>
+      </div>
+      <a href="#" class="btn-combo mt-6 inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 transition-colors font-bold px-6 py-3.5 rounded-full"
+         data-combo="Combo: 10 Carnes + 10 Panes + Cheddar ($25.000)" target="_blank" rel="noopener">
+        Pedir este combo
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+  <div class="text-center max-w-xl mx-auto mb-10" data-aos="fade-up">
+    <h2 class="font-display font-extrabold text-3xl sm:text-4xl">Nuestras Variedades</h2>
+    <p class="mt-3 text-white/60">Pan de papa recién horneado y hamburguesas con el cheddar bien derretido.</p>
+  </div>
+  <div class="grid sm:grid-cols-3 gap-6">
+
+    <div class="card-hover gallery-card rounded-2xl overflow-hidden bg-diezcard border border-diezgold/25 group" data-aos="fade-up" data-aos-duration="700">
+      <div class="food-frame aspect-[4/3] overflow-hidden">
+        <span class="steam" style="left:30%;"></span>
+        <img src="assets/pan-parmesano.jpg" alt="Pan de Papa con lluvia de Parmesano" class="w-full h-full object-cover group-hover:scale-110 group-hover:brightness-110 transition-all duration-500">
+      </div>
+      <div class="p-5">
+        <h3 class="font-display font-bold text-lg">Pan de Papa con Parmesano</h3>
+        <p class="text-white/60 text-sm mt-1">Lluvia de parmesano gratinado, dorada y crocante, sobre pan de papa bien esponjoso.</p>
+      </div>
+    </div>
+
+    <div class="card-hover gallery-card rounded-2xl overflow-hidden bg-diezcard border border-diezgold/25 group" data-aos="fade-up" data-aos-duration="700" data-aos-delay="120">
+      <div class="food-frame aspect-[4/3] overflow-hidden">
+        <span class="steam" style="left:35%;"></span>
+        <img src="assets/pan-sesamo.jpg" alt="Pan de Papa con lluvia de Sésamo" class="w-full h-full object-cover group-hover:scale-110 group-hover:brightness-110 transition-all duration-500">
+      </div>
+      <div class="p-5">
+        <h3 class="font-display font-bold text-lg">Pan de Papa con Sésamo</h3>
+        <p class="text-white/60 text-sm mt-1">El clásico infaltable, con ese brillo recién horneado todos los días.</p>
+      </div>
+    </div>
+
+    <div class="card-hover gallery-card rounded-2xl overflow-hidden bg-diezcard border border-diezred/30 group" data-aos="fade-up" data-aos-duration="700" data-aos-delay="240">
+      <div class="food-frame aspect-[4/3] overflow-hidden">
+        <span class="steam" style="left:32%;"></span>
+        <img src="assets/burger-cheddar.png" alt="Hamburguesa con queso Cheddar derretido" class="w-full h-full object-cover group-hover:scale-110 group-hover:brightness-110 transition-all duration-500">
+      </div>
+      <div class="p-5">
+        <h3 class="font-display font-bold text-lg">Cheddar Bien Derretido</h3>
+        <p class="text-white/60 text-sm mt-1">Medallones jugosos con esa capa de cheddar naranja, tentadora y bien derretida.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ENVIOS -->
+<section class="relative py-14 sm:py-20 overflow-hidden">
+  <div class="absolute inset-0 opacity-20">
+    <img src="assets/medallones-fabrica.jpg" alt="" class="w-full h-full object-cover">
+  </div>
+  <div class="absolute inset-0 bg-diezdark/85"></div>
+  <div class="relative max-w-4xl mx-auto px-4 sm:px-6">
+    <div class="rounded-3xl bg-diezcard/90 border border-white/10 p-8 sm:p-10 text-center" data-aos="fade-up">
+      <h2 class="font-display font-extrabold text-2xl sm:text-3xl">Envíos y Consulta de Costo</h2>
+      <div class="mt-6 grid sm:grid-cols-3 gap-6 text-left">
+        <div class="flex flex-col items-center sm:items-start gap-2">
+          <span class="w-10 h-10 rounded-full bg-diezgold/10 border border-diezgold/30 flex items-center justify-center">
+            <svg viewBox="0 0 24 24" class="w-5 h-5 fill-diezgold"><path d="M3 6a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v3h2.6a1 1 0 0 1 .86.49l2.4 4A1 1 0 0 1 20 15v2a1 1 0 0 1-1 1h-1a2.5 2.5 0 1 1-5 0H9a2.5 2.5 0 1 1-5 0H3a1 1 0 0 1-1-1V6zm12 4V7H4v8h.68A2.49 2.49 0 0 1 7 13.5c.98 0 1.84.5 2.32 1.5H13V10h2zm2 1v3.09A2.48 2.48 0 0 1 19 13.5c.35 0 .68.07 1 .19V15h-1v-1.3l-2.03-3.38L17 11z"/></svg>
+          </span>
+          <p class="text-white/80 text-sm"><span class="font-semibold text-white">Hacemos envíos</span> a tu zona.</p>
+        </div>
+        <div class="flex flex-col items-center sm:items-start gap-2">
+          <span class="w-10 h-10 rounded-full bg-diezgold/10 border border-diezgold/30 flex items-center justify-center">
+            <svg viewBox="0 0 24 24" class="w-5 h-5 fill-diezgold"><path d="M12 2C7.86 2 4.5 5.36 4.5 9.5c0 5.5 6.24 11.4 7.02 12.12a.72.72 0 0 0 .96 0C13.26 20.9 19.5 15 19.5 9.5 19.5 5.36 16.14 2 12 2zm0 10.25a2.75 2.75 0 1 1 0-5.5 2.75 2.75 0 0 1 0 5.5z"/></svg>
+          </span>
+          <p class="text-white/80 text-sm"><span class="font-semibold text-white">Origen:</span> Villa Ballester. Directo de fábrica, sin local a la calle.</p>
+        </div>
+        <div class="flex flex-col items-center sm:items-start gap-2">
+          <span class="w-10 h-10 rounded-full bg-diezgold/10 border border-diezgold/30 flex items-center justify-center">
+            <svg viewBox="0 0 24 24" class="w-5 h-5 fill-diezgold"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+          </span>
+          <p class="text-white/80 text-sm"><span class="font-semibold text-white">Consultá el precio exacto</span> indicándonos tu dirección por WhatsApp.</p>
+        </div>
+      </div>
+      <p class="mt-6 text-xs text-white/40">El costo de envío se cotiza según la zona al momento de hacer el pedido.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHATSAPP + QR -->
+<section class="max-w-4xl mx-auto px-4 sm:px-6 py-14 sm:py-20 text-center" data-aos="fade-up">
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl">Pedí en Segundos</h2>
+  <p class="mt-3 text-white/60 max-w-md mx-auto">Escaneá el código o tocá el botón. Te vamos a estar esperando del otro lado.</p>
+
+  <div class="mt-10 flex flex-col items-center gap-6">
+    <div class="bg-white p-4 rounded-2xl glow-gold card-hover">
+      <img id="qr-code" alt="Código QR para WhatsApp UN DIEZ" class="w-40 h-40 sm:w-48 sm:h-48" src="">
+    </div>
+    <a id="wa-footer" href="#" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 transition-colors font-bold text-base px-8 py-4 rounded-full">
+      <svg viewBox="0 0 32 32" class="w-5 h-5 fill-white shrink-0"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.696 4.611 1.897 6.481L4 29l7.72-1.865A11.94 11.94 0 0 0 16.001 27C22.629 27 28 21.627 28 15S22.629 3 16.001 3zm6.938 17.06c-.297.836-1.474 1.53-2.415 1.73-.642.136-1.48.244-4.3-.923-3.61-1.494-5.933-5.156-6.114-5.394-.174-.238-1.463-1.948-1.463-3.716 0-1.768.923-2.636 1.252-2.998.297-.325.65-.407.868-.407.218 0 .437.002.628.012.201.01.47-.076.735.561.297.716 1.01 2.484 1.098 2.665.089.18.148.393.03.63-.119.238-.178.386-.356.594-.178.208-.375.464-.535.624-.178.178-.363.371-.156.727.208.356.923 1.523 1.982 2.467 1.362 1.214 2.51 1.59 2.865 1.77.356.18.564.15.772-.09.208-.238.892-1.038 1.13-1.394.238-.356.475-.297.802-.178.327.119 2.078.98 2.435 1.157.356.178.594.267.68.416.089.148.089.856-.208 1.692z"/></svg>
+      Hola, quiero hacer un pedido
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-white/10 py-8">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+    <div class="flex items-center gap-2">
+      <div class="logo-badge h-8 w-8">
+        <img src="assets/logo-un-diez.png" alt="UN DIEZ">
+      </div>
+      <span class="font-display font-bold">UN DIEZ</span>
+      <span class="text-white/40 text-sm">· Villa Ballester</span>
+    </div>
+    <p class="text-white/40 text-xs">Venta directa de fábrica · No contamos con local a la calle</p>
+  </div>
+</footer>
+
+<!-- BOTÓN FLOTANTE DE WHATSAPP -->
+<a id="wa-float" href="#" target="_blank" rel="noopener" aria-label="Pedir por WhatsApp"
+   class="pulse-ring fixed bottom-5 right-5 sm:bottom-7 sm:right-7 z-50 flex items-center justify-center w-16 h-16 bg-[#25D366] hover:bg-[#1ebe5b] rounded-full shadow-2xl shadow-black/40 transition-colors">
+  <svg viewBox="0 0 32 32" class="w-8 h-8 fill-white shrink-0"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.696 4.611 1.897 6.481L4 29l7.72-1.865A11.94 11.94 0 0 0 16.001 27C22.629 27 28 21.627 28 15S22.629 3 16.001 3zm6.938 17.06c-.297.836-1.474 1.53-2.415 1.73-.642.136-1.48.244-4.3-.923-3.61-1.494-5.933-5.156-6.114-5.394-.174-.238-1.463-1.948-1.463-3.716 0-1.768.923-2.636 1.252-2.998.297-.325.65-.407.868-.407.218 0 .437.002.628.012.201.01.47-.076.735.561.297.716 1.01 2.484 1.098 2.665.089.18.148.393.03.63-.119.238-.178.386-.356.594-.178.208-.375.464-.535.624-.178.178-.363.371-.156.727.208.356.923 1.523 1.982 2.467 1.362 1.214 2.51 1.59 2.865 1.77.356.18.564.15.772-.09.208-.238.892-1.038 1.13-1.394.238-.356.475-.297.802-.178.327.119 2.078.98 2.435 1.157.356.178.594.267.68.416.089.148.089.856-.208 1.692z"/></svg>
+</a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
