@@ -34,4 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=0&color=17-17-17&data=${encodeURIComponent(genericUrl)}`;
     qrImg.src = qrApiUrl;
   }
+
+  // Botón flotante: late 1s cada 5s de inactividad
+  const waFloat = document.getElementById("wa-float");
+  if (waFloat) {
+    setInterval(() => {
+      waFloat.classList.add("is-pulsing");
+      setTimeout(() => waFloat.classList.remove("is-pulsing"), 1000);
+    }, 5000);
+  }
 });
