@@ -29,7 +29,7 @@
   }
 </script>
 <style>
-  body { background-color: #111111; font-family: 'Inter', sans-serif; }
+  body { background-color: #111111; font-family: 'Inter', sans-serif; overflow-x: hidden; }
   h1, h2, h3, .font-display { font-family: 'Outfit', sans-serif; }
   .text-gradient {
     background: linear-gradient(90deg, #F3A730 0%, #E4342B 100%);
@@ -208,6 +208,70 @@
     box-shadow: inset 0 -18px 30px -12px rgba(0,0,0,0.55);
     pointer-events: none;
   }
+
+  /* ===== CARRUSEL de combos: scroll horizontal con snap en mobile ===== */
+  .carousel-track {
+    display: flex;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
+    background: rgba(10,10,10,0.65);
+    border: 1px solid rgba(243,167,48,0.45);
+    color: #F3A730;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    line-height: 1;
+    z-index: 20;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s ease;
+  }
+  .carousel-arrow:hover { background: rgba(243,167,48,0.18); }
+  .carousel-arrow.prev { left: 4px; }
+  .carousel-arrow.next { right: 4px; }
+  .carousel-hint {
+    position: absolute;
+    top: -1.9rem;
+    right: 0;
+    font-size: 11px;
+    font-weight: 700;
+    color: #F3A730;
+    background: rgba(243,167,48,0.1);
+    border: 1px solid rgba(243,167,48,0.3);
+    padding: 3px 10px;
+    border-radius: 9999px;
+    white-space: nowrap;
+  }
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 1.25rem;
+  }
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background: rgba(255,255,255,0.2);
+    transition: background 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+  }
+  .carousel-dot.active {
+    background: #F3A730;
+    transform: scale(1.35);
+  }
 </style>
 </head>
 <body class="text-white antialiased">
@@ -334,9 +398,14 @@
     <h2 class="font-display font-extrabold text-3xl sm:text-4xl mt-1">Nuestros Combos</h2>
     <p class="mt-3 text-white/60">Elegí tu combo y pedilo directo por WhatsApp, ya con el mensaje listo.</p>
   </div>
-  <div class="grid sm:grid-cols-2 gap-6">
+  <div class="carousel relative">
+    <span class="carousel-hint sm:hidden">Deslizá ➔</span>
+    <button type="button" class="carousel-arrow prev sm:hidden" aria-label="Combo anterior">‹</button>
+    <button type="button" class="carousel-arrow next sm:hidden" aria-label="Combo siguiente">›</button>
 
-    <div class="card-hover combo-card rounded-3xl bg-diezcard border border-white/10 overflow-hidden flex flex-col" data-aos="fade-up" data-aos-duration="700">
+    <div class="carousel-track overflow-x-auto snap-x snap-mandatory gap-6 pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:snap-none sm:pb-0">
+
+    <div class="min-w-[82vw] sm:min-w-0 snap-start card-hover combo-card rounded-3xl bg-diezcard border border-white/10 overflow-hidden flex flex-col" data-aos="fade-up" data-aos-duration="700">
       <div class="ingredient-collage aspect-[16/10]" style="grid-template-columns: 1fr 1fr;">
         <div>
           <img src="assets/medallones-fabrica.jpg" alt="10 medallones de carne fresca">
@@ -348,8 +417,7 @@
         </div>
       </div>
       <div class="p-7 sm:p-8 flex flex-col flex-1">
-        <span class="crown-badge inline-block w-fit text-diezdark text-xs font-bold px-3 py-1 rounded-full mb-4">COMBO 1</span>
-        <h3 class="font-display font-bold text-2xl">10 Carnes + 10 Panes</h3>
+        <h3 class="font-display font-bold text-2xl">Pack Familiar — Carne + Pan</h3>
         <p class="mt-2 text-white/60 text-sm">Medallones de carne fresca y 10 panes de papa súper esponjosos a elección (Sésamo o Parmesano, sin costo extra).</p>
         <p class="mt-3 text-white/85 text-sm font-medium">🥩 10 Carnes &nbsp;|&nbsp; 🍞 10 Panes</p>
         <p class="mt-2 text-diezgold text-xs sm:text-sm font-semibold flex-1">✨ Pan de papa a elección: Sésamo o Parmesano (Mismo precio)</p>
@@ -364,7 +432,7 @@
       </div>
     </div>
 
-    <div class="card-hover combo-card rounded-3xl bg-diezcard border border-diezgold/40 overflow-hidden flex flex-col relative" data-aos="fade-up" data-aos-duration="700" data-aos-delay="150">
+    <div class="min-w-[82vw] sm:min-w-0 snap-start card-hover combo-card rounded-3xl bg-diezcard border border-diezgold/40 overflow-hidden flex flex-col relative" data-aos="fade-up" data-aos-duration="700" data-aos-delay="150">
       <span class="absolute top-3 right-3 z-10 bg-diezred text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-lg">CON CHEDDAR</span>
       <div class="ingredient-collage aspect-[16/10]" style="grid-template-columns: 1fr 1fr 1fr;">
         <div>
@@ -381,8 +449,7 @@
         </div>
       </div>
       <div class="p-7 sm:p-8 flex flex-col flex-1">
-        <span class="crown-badge inline-block w-fit text-diezdark text-xs font-bold px-3 py-1 rounded-full mb-4">COMBO 2</span>
-        <h3 class="font-display font-bold text-2xl">10 Carnes + 10 Panes + 10 Fetas de Cheddar</h3>
+        <h3 class="font-display font-bold text-2xl">Pack Familiar — Cheddar</h3>
         <p class="mt-2 text-white/60 text-sm">Medallones de carne fresca, 10 panes de papa súper esponjosos a elección (Sésamo o Parmesano, sin costo extra) y 10 fetas de queso cheddar seleccionadas por su fundición excelente.</p>
         <p class="mt-3 text-white/85 text-sm font-medium">🥩 10 Carnes &nbsp;|&nbsp; 🍞 10 Panes &nbsp;|&nbsp; 🧀 10 Fetas de Cheddar</p>
         <p class="mt-2 text-diezgold text-xs sm:text-sm font-semibold flex-1">✨ Pan de papa a elección: Sésamo o Parmesano (Mismo precio)</p>
@@ -397,6 +464,8 @@
       </div>
     </div>
 
+    </div>
+    <div class="carousel-dots sm:hidden"></div>
   </div>
 </section>
 
@@ -406,12 +475,17 @@
     <h2 class="font-display font-extrabold text-2xl sm:text-3xl">Formato Express — Combos de 5</h2>
     <p class="mt-3 text-white/60">Ideal para probar o para consumo chico. También con pan a elección.</p>
   </div>
-  <div class="grid sm:grid-cols-2 gap-6">
+  <div class="carousel relative">
+    <span class="carousel-hint sm:hidden">Deslizá ➔</span>
+    <button type="button" class="carousel-arrow prev sm:hidden" aria-label="Combo anterior">‹</button>
+    <button type="button" class="carousel-arrow next sm:hidden" aria-label="Combo siguiente">›</button>
 
-    <div class="card-hover combo-card rounded-3xl bg-diezcard border border-amber-500/30 overflow-hidden flex flex-col" data-aos="fade-up" data-aos-duration="700">
+    <div class="carousel-track overflow-x-auto snap-x snap-mandatory gap-6 pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:snap-none sm:pb-0">
+
+    <div class="min-w-[82vw] sm:min-w-0 snap-start card-hover combo-card rounded-3xl bg-diezcard border border-amber-500/30 overflow-hidden flex flex-col" data-aos="fade-up" data-aos-duration="700">
       <div class="p-7 sm:p-8 flex flex-col flex-1">
         <span class="inline-block w-fit bg-amber-500/10 text-amber-400 font-semibold text-xs px-2.5 py-1 rounded-full mb-4">🔥 Formato Express</span>
-        <h3 class="font-display font-bold text-2xl">Combo 05 — Simple</h3>
+        <h3 class="font-display font-bold text-2xl">Pack Express — Carne + Pan</h3>
         <p class="mt-2 text-white/60 text-sm">5 medallones de carne fresca y 5 panes de papa a elección (Sésamo o Parmesano).</p>
         <p class="mt-3 text-white/85 text-sm font-medium flex-1">🥩 5 Carnes &nbsp;|&nbsp; 🍞 5 Panes</p>
         <div class="mt-6 flex items-end justify-between">
@@ -426,10 +500,10 @@
       </div>
     </div>
 
-    <div class="card-hover combo-card rounded-3xl bg-diezcard border border-amber-500/30 overflow-hidden flex flex-col relative" data-aos="fade-up" data-aos-duration="700" data-aos-delay="150">
+    <div class="min-w-[82vw] sm:min-w-0 snap-start card-hover combo-card rounded-3xl bg-diezcard border border-amber-500/30 overflow-hidden flex flex-col relative" data-aos="fade-up" data-aos-duration="700" data-aos-delay="150">
       <div class="p-7 sm:p-8 flex flex-col flex-1">
         <span class="inline-block w-fit bg-amber-500/10 text-amber-400 font-semibold text-xs px-2.5 py-1 rounded-full mb-4">🔥 Formato Express + Cheddar</span>
-        <h3 class="font-display font-bold text-2xl">Combo 05 — Completo</h3>
+        <h3 class="font-display font-bold text-2xl">Pack Express — Cheddar</h3>
         <p class="mt-2 text-white/60 text-sm">5 medallones, 5 panes de papa a elección (Sésamo o Parmesano) y 5 fetas de cheddar.</p>
         <p class="mt-3 text-white/85 text-sm font-medium flex-1">🥩 5 Carnes &nbsp;|&nbsp; 🍞 5 Panes &nbsp;|&nbsp; 🧀 5 Fetas de Cheddar</p>
         <div class="mt-6 flex items-end justify-between">
@@ -444,6 +518,8 @@
       </div>
     </div>
 
+    </div>
+    <div class="carousel-dots sm:hidden"></div>
   </div>
 </section>
 

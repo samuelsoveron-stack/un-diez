@@ -47,4 +47,61 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => waFloat.classList.remove("is-pulsing"), 1000);
     }, 5000);
   }
+
+  initCarousels();
 });
+
+// Carruseles de combos: flechas + dots sincronizados con el scroll horizontal
+function initCarousels() {
+  document.querySelectorAll(".carousel").forEach((carousel) => {
+    const track = carousel.querySelector(".carousel-track");
+    const prevBtn = carousel.querySelector(".carousel-arrow.prev");
+    const nextBtn = carousel.querySelector(".carousel-arrow.next");
+    const dotsWrap = carousel.querySelector(".carousel-dots");
+    if (!track) return;
+    const cards = [...track.children];
+    if (cards.length === 0) return;
+
+    if (dotsWrap) {
+      dotsWrap.innerHTML = "";
+      cards.forEach((card, i) => {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "carousel-dot" + (i === 0 ? " active" : "");
+        dot.setAttribute("aria-label", `Ir al combo ${i + 1}`);
+        dot.addEventListener("click", () => {
+          card.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+        });
+        dotsWrap.appendChild(dot);
+      });
+    }
+
+    const updateDots = () => {
+      if (!dotsWrap) return;
+      const dots = [...dotsWrap.children];
+      const trackLeft = track.getBoundingClientRect().left;
+      let closest = 0;
+      let closestDist = Infinity;
+      cards.forEach((card, i) => {
+        const dist = Math.abs(card.getBoundingClientRect().left - trackLeft);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closest = i;
+        }
+      });
+      dots.forEach((dot, i) => dot.classList.toggle("active", i === closest));
+    };
+
+    const scrollAmount = () => (cards[0] ? cards[0].getBoundingClientRect().width + 24 : 300);
+    if (prevBtn) prevBtn.addEventListener("click", () => track.scrollBy({ left: -scrollAmount(), behavior: "smooth" }));
+    if (nextBtn) nextBtn.addEventListener("click", () => track.scrollBy({ left: scrollAmount(), behavior: "smooth" }));
+
+    let scrollTimeout;
+    track.addEventListener("scroll", () => {
+      window.clearTimeout(scrollTimeout);
+      scrollTimeout = window.setTimeout(updateDots, 80);
+    });
+
+    updateDots();
+  });
+}
