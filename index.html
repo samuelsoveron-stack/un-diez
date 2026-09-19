@@ -530,9 +530,14 @@
     <h2 class="font-display font-extrabold text-3xl sm:text-4xl mt-1">Nuestras Variedades</h2>
     <p class="mt-3 text-white/60">Pan de papa recién horneado y hamburguesas con el cheddar bien derretido.</p>
   </div>
-  <div class="grid sm:grid-cols-3 gap-6">
+  <div class="carousel relative">
+    <span class="carousel-hint sm:hidden">Deslizá ➔</span>
+    <button type="button" class="carousel-arrow prev sm:hidden" aria-label="Variedad anterior">‹</button>
+    <button type="button" class="carousel-arrow next sm:hidden" aria-label="Variedad siguiente">›</button>
 
-    <div class="card-hover gallery-card rounded-2xl overflow-hidden bg-diezcard border border-diezgold/25 group" data-aos="fade-up" data-aos-duration="700">
+    <div class="carousel-track overflow-x-auto snap-x snap-mandatory gap-6 pb-2 sm:grid sm:grid-cols-3 sm:overflow-visible sm:snap-none sm:pb-0">
+
+    <div class="min-w-[82vw] sm:min-w-0 snap-start card-hover gallery-card rounded-2xl overflow-hidden bg-diezcard border border-diezgold/25 group" data-aos="fade-up" data-aos-duration="700">
       <div class="food-frame aspect-[4/3] overflow-hidden">
         <span class="steam" style="left:30%;"></span>
         <img src="assets/pan-parmesano.jpg" alt="Pan de Papa con lluvia de Parmesano" class="w-full h-full object-cover group-hover:scale-110 group-hover:brightness-110 transition-all duration-500">
@@ -543,7 +548,7 @@
       </div>
     </div>
 
-    <div class="card-hover gallery-card rounded-2xl overflow-hidden bg-diezcard border border-diezgold/25 group" data-aos="fade-up" data-aos-duration="700" data-aos-delay="120">
+    <div class="min-w-[82vw] sm:min-w-0 snap-start card-hover gallery-card rounded-2xl overflow-hidden bg-diezcard border border-diezgold/25 group" data-aos="fade-up" data-aos-duration="700" data-aos-delay="120">
       <div class="food-frame aspect-[4/3] overflow-hidden">
         <span class="steam" style="left:35%;"></span>
         <img src="assets/pan-sesamo.jpg" alt="Pan de Papa con lluvia de Sésamo" class="w-full h-full object-cover group-hover:scale-110 group-hover:brightness-110 transition-all duration-500">
@@ -554,7 +559,7 @@
       </div>
     </div>
 
-    <div class="card-hover gallery-card rounded-2xl overflow-hidden bg-diezcard border border-diezred/30 group" data-aos="fade-up" data-aos-duration="700" data-aos-delay="240">
+    <div class="min-w-[82vw] sm:min-w-0 snap-start card-hover gallery-card rounded-2xl overflow-hidden bg-diezcard border border-diezred/30 group" data-aos="fade-up" data-aos-duration="700" data-aos-delay="240">
       <div class="food-frame aspect-[4/3] overflow-hidden">
         <span class="steam" style="left:32%;"></span>
         <img src="assets/burger-cheddar-smash.webp" alt="Hamburguesa smash doble con queso Cheddar derretido" class="w-full h-full object-cover object-center group-hover:scale-110 group-hover:brightness-110 transition-all duration-500">
@@ -565,6 +570,8 @@
       </div>
     </div>
 
+    </div>
+    <div class="carousel-dots sm:hidden"></div>
   </div>
 </section>
 
