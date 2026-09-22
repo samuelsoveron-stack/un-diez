@@ -1,5 +1,10 @@
 // Configuración UN DIEZ — WhatsApp
-const WHATSAPP_NUMBER = "5491132644106";
+const WHATSAPP_NUMBER = "5491132644106"; // Número de fábrica (usado si no hay revendedor asociado)
+
+// Planilla de revendedores: Google Sheet publicada como CSV (Archivo > Compartir >
+// Publicar en la web > CSV), con columnas id,nombre,whatsapp. El dueño del negocio
+// da de alta o baja revendedores editando filas ahí, sin tocar código ni redeployar.
+const REVENDEDORES_SHEET_CSV_URL = ""; // ← pegar acá el link "output=csv" de la planilla
 
 // Botones genéricos (header, hero, footer, flotante): el mensaje depende
 // del contexto de la página (retail vs. mayorista), marcado en <body data-context>.
@@ -10,10 +15,57 @@ const MENSAJE_MAYORISTA_GENERAL =
   "¡Hola *UN DIEZ*! 🏭\nVi la propuesta para revendedores/mayoristas en la web y quisiera recibir información para mi zona.\n\n📋 *Localidad / Nombre del negocio:* ";
 
 function buildWhatsAppUrl(mensaje) {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+  const numero = localStorage.getItem("undiez_ref_wa") || WHATSAPP_NUMBER;
+  return `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+// Lee ?ref=id de la URL, lo valida contra la planilla de revendedores y persiste
+// el WhatsApp asociado en localStorage. Si el id no existe (o no hay planilla
+// configurada), no toca lo que ya estuviera guardado.
+async function gestionarRevendedor() {
+  const refParam = new URLSearchParams(window.location.search).get("ref");
+  if (!refParam || !REVENDEDORES_SHEET_CSV_URL) return;
+
+  try {
+    const url = new URL(REVENDEDORES_SHEET_CSV_URL);
+    url.searchParams.set("_", Date.now()); // evita CSV cacheado al editar la planilla
+    const respuesta = await fetch(url, { cache: "no-store" });
+    if (!respuesta.ok) return;
+
+    const revendedor = parseRevendedoresCsv(await respuesta.text())[refParam.trim().toLowerCase()];
+    if (!revendedor) return;
+
+    localStorage.setItem("undiez_ref_id", refParam);
+    localStorage.setItem("undiez_ref_wa", revendedor.whatsapp);
+    localStorage.setItem("undiez_ref_nombre", revendedor.nombre);
+  } catch (error) {
+    console.warn("No se pudo verificar el revendedor:", error);
+  }
+}
+
+function parseRevendedoresCsv(csv) {
+  const mapa = {};
+  csv.trim().split("\n").slice(1).forEach((fila) => {
+    const [id, nombre, whatsapp] = fila.split(",").map((valor) => valor?.trim());
+    if (id && whatsapp) {
+      mapa[id.toLowerCase()] = { nombre: nombre || id, whatsapp: whatsapp.replace(/\D/g, "") };
+    }
+  });
+  return mapa;
+}
+
+function mostrarBannerRevendedor() {
+  const nombre = localStorage.getItem("undiez_ref_nombre");
+  const banner = document.getElementById("revendedor-banner");
+  if (!nombre || !banner) return;
+  document.getElementById("revendedor-banner-nombre").textContent = nombre;
+  banner.classList.remove("hidden");
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await gestionarRevendedor();
+  mostrarBannerRevendedor();
+
   const esMayorista = document.body.dataset.context === "mayorista";
   const mensajeGenerico = esMayorista ? MENSAJE_MAYORISTA_GENERAL : MENSAJE_CONSULTA_GENERAL;
 
