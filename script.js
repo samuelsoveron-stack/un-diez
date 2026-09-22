@@ -4,7 +4,8 @@ const WHATSAPP_NUMBER = "5491132644106"; // Número de fábrica (usado si no hay
 // Planilla de revendedores: Google Sheet publicada como CSV (Archivo > Compartir >
 // Publicar en la web > CSV), con columnas id,nombre,whatsapp. El dueño del negocio
 // da de alta o baja revendedores editando filas ahí, sin tocar código ni redeployar.
-const REVENDEDORES_SHEET_CSV_URL = ""; // ← pegar acá el link "output=csv" de la planilla
+const REVENDEDORES_SHEET_CSV_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQKzBVaBBtAJhL8fP9ndslkMx3ekE8NDDmLRG14yo3KVTi-IT4SNqdtALNZ5QqirkUotuEnpc8E7U5q/pub?output=csv";
 
 // Botones genéricos (header, hero, footer, flotante): el mensaje depende
 // del contexto de la página (retail vs. mayorista), marcado en <body data-context>.
