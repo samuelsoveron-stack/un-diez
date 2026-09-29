@@ -55,13 +55,12 @@ function actualizarHorarioBadge() {
   const abierto = dia >= 1 && dia <= 6 && horaDecimal >= 9 && horaDecimal < 20;
 
   badges.forEach((badge) => {
-    if (abierto) {
-      badge.textContent = "🟢 Abiertos";
-      badge.className = "horario-badge shrink-0 w-fit mt-2 text-xs font-bold px-3 py-1.5 rounded-full whitespace-nowrap bg-green-500/15 text-green-400 border border-green-500/40";
-    } else {
-      badge.textContent = "🌙 Cerrado (Tomando pedidos)";
-      badge.className = "horario-badge shrink-0 w-fit mt-2 text-xs font-bold px-3 py-1.5 rounded-full whitespace-nowrap bg-white/5 text-white/50 border border-white/15";
-    }
+    const completo = badge.classList.contains("horario-full");
+    badge.textContent = abierto ? "🟢 Abiertos" : (completo ? "🌙 Cerrado (Tomando pedidos)" : "🌙 Cerrado");
+    badge.classList.remove("bg-green-500/15", "text-green-400", "border-green-500/40", "bg-white/5", "text-white/50", "border-white/15");
+    badge.classList.add("border", ...(abierto
+      ? ["bg-green-500/15", "text-green-400", "border-green-500/40"]
+      : ["bg-white/5", "text-white/50", "border-white/15"]));
   });
 }
 
