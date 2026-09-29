@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   initCarousels();
+  initCarrito();
   actualizarHorarioBadge();
   setInterval(actualizarHorarioBadge, 60000);
 });
@@ -117,4 +118,54 @@ function initCarousels() {
 
     updateDots();
   });
+}
+
+// Carrito: cantidades por combo + mensaje dinámico de WhatsApp
+function initCarrito() {
+  const items = [...document.querySelectorAll(".combo-qty")].map((el) => ({
+    el,
+    nombre: el.dataset.nombre,
+    precio: Number(el.dataset.precio),
+    cant: 0,
+    valor: el.querySelector(".qty-valor"),
+  }));
+  if (!items.length) return;
+
+  const fmt = (n) => "$" + n.toLocaleString("es-AR");
+  const sendBtn = document.getElementById("cart-send");
+
+  function render() {
+    const lineas = items.filter((i) => i.cant > 0);
+    const total = lineas.reduce((t, i) => t + i.cant * i.precio, 0);
+    const unidades = lineas.reduce((t, i) => t + i.cant, 0);
+    items.forEach((i) => (i.valor.textContent = i.cant));
+    document.getElementById("cart-count").textContent = unidades;
+    document.getElementById("cart-count-label").textContent = unidades === 1 ? "ítem" : "ítems";
+    document.getElementById("cart-total").textContent = fmt(total);
+    document.body.classList.toggle("cart-open", unidades > 0);
+
+    const detalle = lineas.map((i) => `• ${i.cant}x ${i.nombre} (${fmt(i.cant * i.precio)})`).join("\n");
+    const mensaje =
+      "¡Hola *UN DIEZ*! Quería hacer el siguiente pedido:\n\n" +
+      "🛒 *Detalle del pedido:*\n" + detalle + "\n\n" +
+      `💰 *Total de productos:* ${fmt(total)}\n` +
+      "🍞 *Variedad de pan:* (Sésamo / Parmesano)\n" +
+      "🛵 Consulta por costo de envío a domicilio en mi zona.\n" +
+      "💳 *Medio de pago:* (Efectivo / Mercado Pago / Transferencia)";
+    sendBtn.href = buildWhatsAppUrl(mensaje);
+  }
+
+  items.forEach((i) => {
+    i.el.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-accion]");
+      if (!btn) return;
+      i.cant = Math.max(0, Math.min(99, i.cant + (btn.dataset.accion === "mas" ? 1 : -1)));
+      render();
+    });
+  });
+  document.getElementById("cart-clear").addEventListener("click", () => {
+    items.forEach((i) => (i.cant = 0));
+    render();
+  });
+  render();
 }

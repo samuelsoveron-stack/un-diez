@@ -278,6 +278,16 @@
     background: #F3A730;
     transform: scale(1.35);
   }
+
+  /* Carrito */
+  .qty-btn { width:2.75rem; height:2.75rem; border-radius:9999px; font-weight:800; font-size:1.4rem; line-height:1; display:flex; align-items:center; justify-content:center; transition:background .15s, transform .1s; }
+  .qty-btn:active { transform:scale(.92); }
+  #cart-bar { transform:translateY(120%); transition:transform .3s ease; }
+  body.cart-open #cart-bar { transform:translateY(0); }
+  body.cart-open #wa-float { bottom:6.5rem; }
+  body.cart-open { padding-bottom:6rem; }
+  @keyframes cobro-glow { 0%,100% { box-shadow:0 0 0 0 rgba(243,167,48,.55); } 50% { box-shadow:0 0 0 6px rgba(243,167,48,0); } }
+  .cobro-badge { animation:cobro-glow 1.8s ease-in-out infinite; }
 </style>
 </head>
 <body class="text-white antialiased">
@@ -393,12 +403,37 @@
   </div>
 </section>
 
+<!-- CÓMO PEDIR -->
+<section class="max-w-6xl mx-auto px-4 sm:px-6 pt-14 sm:pt-20">
+  <div class="text-center max-w-xl mx-auto mb-8" data-aos="fade-up">
+    <span class="text-diezgold text-xs sm:text-sm font-bold uppercase tracking-widest">Cómo Pedir</span>
+    <h2 class="font-display font-extrabold text-3xl sm:text-4xl mt-1">Pedir es fácil, en 3 pasos</h2>
+  </div>
+  <div class="grid gap-4 md:grid-cols-3">
+    <div class="flex md:flex-col items-start md:items-center md:text-center gap-4 bg-[#1A1A1A] border border-diezgold/25 rounded-2xl p-5 sm:p-6" data-aos="fade-up">
+      <span class="w-11 h-11 shrink-0 rounded-full bg-diezgold text-black font-display font-black text-xl flex items-center justify-center">1</span>
+      <div><h3 class="font-display font-bold text-base">Armá tu pedido</h3>
+      <p class="text-white/60 text-sm mt-1">Seleccioná tus combos de medallones (~100 g) y ajustá las cantidades en el carrito.</p></div>
+    </div>
+    <div class="flex md:flex-col items-start md:items-center md:text-center gap-4 bg-[#1A1A1A] border border-diezgold/25 rounded-2xl p-5 sm:p-6" data-aos="fade-up" data-aos-delay="100">
+      <span class="w-11 h-11 shrink-0 rounded-full bg-diezgold text-black font-display font-black text-xl flex items-center justify-center">2</span>
+      <div><h3 class="font-display font-bold text-base">Enviá tu carrito por WhatsApp</h3>
+      <p class="text-white/60 text-sm mt-1">Hacé clic en "Enviar Pedido" para mandarnos la lista y el total actualizado en un solo mensaje.</p></div>
+    </div>
+    <div class="flex md:flex-col items-start md:items-center md:text-center gap-4 bg-[#1A1A1A] border border-diezgold/25 rounded-2xl p-5 sm:p-6" data-aos="fade-up" data-aos-delay="200">
+      <span class="w-11 h-11 shrink-0 rounded-full bg-diezgold text-black font-display font-black text-xl flex items-center justify-center">3</span>
+      <div><h3 class="font-display font-bold text-base">Coordinamos envío y pago</h3>
+      <p class="text-white/60 text-sm mt-1">Te pasamos el costo de envío a domicilio según tu zona y coordinamos el pago (Efectivo, Mercado Pago o Transferencia).</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- COMBOS -->
 <section id="combos" class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
   <div class="text-center max-w-xl mx-auto mb-10" data-aos="fade-up">
     <span class="text-diezgold text-xs sm:text-sm font-bold uppercase tracking-widest">02 — Nuestros Combos</span>
     <h2 class="font-display font-extrabold text-3xl sm:text-4xl mt-1">Nuestros Combos</h2>
-    <p class="mt-3 text-white/60">Elegí tu combo y pedilo directo por WhatsApp, ya con el mensaje listo.</p>
+    <p class="mt-3 text-white/60">Elegí las cantidades y mandanos tu pedido completo por WhatsApp, ya con el total calculado.</p>
   </div>
   <div class="carousel relative">
     <span class="carousel-hint sm:hidden">Deslizá ➔</span>
@@ -426,11 +461,14 @@
         <div class="mt-6 flex items-end justify-between">
           <span class="font-display font-black text-3xl sm:text-4xl text-diezgold">$18.000<span class="text-base font-semibold text-white/50">.-</span></span>
         </div>
-        <a href="#" class="btn-combo mt-6 inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 transition-colors font-bold px-6 py-3.5 rounded-full"
-           data-mensaje="¡Hola *UN DIEZ*! 👋&#10;Quisiera hacer el siguiente pedido:&#10;&#10;🍔 *Combo 1:* 10 Carnes + 10 Panes ($18.000)&#10;🍞 *Variedad de Pan:* (Elegir: Sésamo / Parmesano)&#10;&#10;📍 *Mi dirección para consultar envío:* "
-           target="_blank" rel="noopener">
-          Pedir este combo
-        </a>
+        <div class="combo-qty mt-6 flex items-center justify-between gap-3 bg-black/30 border border-white/10 rounded-full p-1.5" data-id="f1" data-nombre="Pack Familiar — Carne + Pan" data-precio="18000">
+          <span class="pl-4 text-sm font-semibold text-white/70">Cantidad</span>
+          <div class="flex items-center gap-2">
+            <button type="button" class="qty-btn bg-white/10 hover:bg-white/20" data-accion="menos" aria-label="Quitar uno">−</button>
+            <span class="qty-valor w-8 text-center font-display font-bold text-xl">0</span>
+            <button type="button" class="qty-btn bg-green-500 hover:bg-green-600" data-accion="mas" aria-label="Agregar uno">+</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -458,11 +496,14 @@
         <div class="mt-6 flex items-end justify-between">
           <span class="font-display font-black text-3xl sm:text-4xl text-diezgold">$20.000<span class="text-base font-semibold text-white/50">.-</span></span>
         </div>
-        <a href="#" class="btn-combo mt-6 inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 transition-colors font-bold px-6 py-3.5 rounded-full"
-           data-mensaje="¡Hola *UN DIEZ*! 👋&#10;Quisiera hacer el siguiente pedido:&#10;&#10;🧀 *Combo 2:* 10 Carnes + 10 Panes + 10 Cheddar ($20.000)&#10;🍞 *Variedad de Pan:* (Elegir: Sésamo / Parmesano)&#10;&#10;📍 *Mi dirección para consultar envío:* "
-           target="_blank" rel="noopener">
-          Pedir este combo
-        </a>
+        <div class="combo-qty mt-6 flex items-center justify-between gap-3 bg-black/30 border border-white/10 rounded-full p-1.5" data-id="f2" data-nombre="Pack Familiar — Cheddar" data-precio="20000">
+          <span class="pl-4 text-sm font-semibold text-white/70">Cantidad</span>
+          <div class="flex items-center gap-2">
+            <button type="button" class="qty-btn bg-white/10 hover:bg-white/20" data-accion="menos" aria-label="Quitar uno">−</button>
+            <span class="qty-valor w-8 text-center font-display font-bold text-xl">0</span>
+            <button type="button" class="qty-btn bg-green-500 hover:bg-green-600" data-accion="mas" aria-label="Agregar uno">+</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -493,11 +534,14 @@
         <div class="mt-6 flex items-end justify-between">
           <span class="font-display font-black text-3xl sm:text-4xl text-diezgold">$10.000<span class="text-base font-semibold text-white/50">.-</span></span>
         </div>
-        <a href="#" class="btn-combo mt-6 inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 transition-colors font-bold px-6 py-3.5 rounded-full"
-           data-mensaje="¡Hola *UN DIEZ*! 🍔&#10;Quisiera pedir el siguiente combo:&#10;&#10;🍔 *Combo 05 Minorista:* 5 Carnes + 5 Panes&#10;💰 *Precio:* $10.000&#10;🍞 *Variedad de Pan:* (Elegir: Sésamo / Parmesano / Combinado)&#10;&#10;📍 *Dirección de envío / Retiro:* "
-           target="_blank" rel="noopener">
-          Pedir este combo
-        </a>
+        <div class="combo-qty mt-6 flex items-center justify-between gap-3 bg-black/30 border border-white/10 rounded-full p-1.5" data-id="e1" data-nombre="Pack Express — Carne + Pan" data-precio="10000">
+          <span class="pl-4 text-sm font-semibold text-white/70">Cantidad</span>
+          <div class="flex items-center gap-2">
+            <button type="button" class="qty-btn bg-white/10 hover:bg-white/20" data-accion="menos" aria-label="Quitar uno">−</button>
+            <span class="qty-valor w-8 text-center font-display font-bold text-xl">0</span>
+            <button type="button" class="qty-btn bg-green-500 hover:bg-green-600" data-accion="mas" aria-label="Agregar uno">+</button>
+          </div>
+        </div>
         <p class="mt-4 text-white/40 text-xs">💡 ¿Buscás el mejor precio por unidad? Llevá el Combo de 10 y ahorrá hasta un 25%.</p>
       </div>
     </div>
@@ -511,17 +555,36 @@
         <div class="mt-6 flex items-end justify-between">
           <span class="font-display font-black text-3xl sm:text-4xl text-diezgold">$12.000<span class="text-base font-semibold text-white/50">.-</span></span>
         </div>
-        <a href="#" class="btn-combo mt-6 inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 transition-colors font-bold px-6 py-3.5 rounded-full"
-           data-mensaje="¡Hola *UN DIEZ*! 🍔&#10;Quisiera pedir el siguiente combo:&#10;&#10;🧀 *Combo 05 Minorista:* 5 Carnes + 5 Panes + 5 Cheddar&#10;💰 *Precio:* $12.000&#10;🍞 *Variedad de Pan:* (Elegir: Sésamo / Parmesano / Combinado)&#10;&#10;📍 *Dirección de envío / Retiro:* "
-           target="_blank" rel="noopener">
-          Pedir este combo
-        </a>
+        <div class="combo-qty mt-6 flex items-center justify-between gap-3 bg-black/30 border border-white/10 rounded-full p-1.5" data-id="e2" data-nombre="Pack Express — Cheddar" data-precio="12000">
+          <span class="pl-4 text-sm font-semibold text-white/70">Cantidad</span>
+          <div class="flex items-center gap-2">
+            <button type="button" class="qty-btn bg-white/10 hover:bg-white/20" data-accion="menos" aria-label="Quitar uno">−</button>
+            <span class="qty-valor w-8 text-center font-display font-bold text-xl">0</span>
+            <button type="button" class="qty-btn bg-green-500 hover:bg-green-600" data-accion="mas" aria-label="Agregar uno">+</button>
+          </div>
+        </div>
         <p class="mt-4 text-white/40 text-xs">💡 ¿Buscás el mejor precio por unidad? Llevá el Combo de 10 y ahorrá hasta un 25%.</p>
       </div>
     </div>
 
     </div>
     <div class="carousel-dots sm:hidden"></div>
+  </div>
+</section>
+
+<!-- ESPECIFICACIONES -->
+<section class="max-w-4xl mx-auto px-4 sm:px-6 pb-14 sm:pb-20">
+  <div class="bg-[#1A1A1A] border border-white/10 rounded-3xl p-6 sm:p-8" data-aos="fade-up">
+    <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-center">Sobre nuestros medallones</h2>
+    <p class="mt-4 text-center text-white/85 font-medium">🥩 Peso por medallón: <span class="text-diezgold font-bold">aprox. 100 g</span> por unidad</p>
+    <p class="mt-6 text-center text-white/60 text-sm uppercase tracking-widest font-semibold">Formas de cocción recomendadas</p>
+    <div class="mt-4 flex flex-wrap justify-center gap-2.5">
+      <span class="bg-white/5 border border-white/15 rounded-full px-4 py-2 text-sm font-medium">🍳 Plancheta o Sartén</span>
+      <span class="bg-white/5 border border-white/15 rounded-full px-4 py-2 text-sm font-medium">🍔 A la Plancha</span>
+      <span class="bg-white/5 border border-white/15 rounded-full px-4 py-2 text-sm font-medium">🔥 A la Parrilla</span>
+      <span class="bg-white/5 border border-white/15 rounded-full px-4 py-2 text-sm font-medium">🍕 Al Horno</span>
+      <span class="bg-white/5 border border-white/15 rounded-full px-4 py-2 text-sm font-medium">🥘 Al Disco</span>
+    </div>
   </div>
 </section>
 
@@ -705,6 +768,42 @@
   </div>
 </section>
 
+<!-- GALERÍA DE CLIENTES -->
+<section class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+  <div class="text-center max-w-xl mx-auto mb-10" data-aos="fade-up">
+    <h2 class="font-display font-extrabold text-3xl sm:text-4xl">🔥 Sumate a la experiencia UN DIEZ</h2>
+    <p class="mt-3 text-white/60">Fotos reales de nuestros clientes disfrutando en casa, en juntadas o al aire libre.</p>
+  </div>
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div class="aspect-square rounded-2xl overflow-hidden border border-white/10 bg-diezcard" data-aos="fade-up">
+        <img src="assets/clientes-1.jpg" alt="Hamburguesa al aire libre" loading="lazy" class="w-full h-full object-cover" style="object-position:50% 50%">
+      </div>
+      <div class="aspect-square rounded-2xl overflow-hidden border border-white/10 bg-diezcard" data-aos="fade-up">
+        <img src="assets/clientes-2.jpg" alt="Doble con huevo y cheddar sobre tabla" loading="lazy" class="w-full h-full object-cover" style="object-position:50% 50%">
+      </div>
+      <div class="aspect-square rounded-2xl overflow-hidden border border-white/10 bg-diezcard" data-aos="fade-up">
+        <img src="assets/clientes-3.jpg" alt="Panes parmesano con medallón y tomate" loading="lazy" class="w-full h-full object-cover" style="object-position:50% 50%">
+      </div>
+      <div class="aspect-square rounded-2xl overflow-hidden border border-white/10 bg-diezcard" data-aos="fade-up">
+        <img src="assets/clientes-4.jpg" alt="Doble cortada con papas fritas" loading="lazy" class="w-full h-full object-cover" style="object-position:50% 50%">
+      </div>
+      <div class="aspect-square rounded-2xl overflow-hidden border border-white/10 bg-diezcard" data-aos="fade-up">
+        <img src="assets/clientes-5.jpg" alt="Hamburguesa con jamón y papas" loading="lazy" class="w-full h-full object-cover" style="object-position:50% 80%">
+      </div>
+      <div class="aspect-square rounded-2xl overflow-hidden border border-white/10 bg-diezcard" data-aos="fade-up">
+        <img src="assets/clientes-6.jpg" alt="Tabla de hamburguesas con cheddar" loading="lazy" class="w-full h-full object-cover" style="object-position:50% 50%">
+      </div>
+      <div class="aspect-square rounded-2xl overflow-hidden border border-white/10 bg-diezcard" data-aos="fade-up">
+        <img src="assets/clientes-7.jpg" alt="Panes parmesano con cheddar" loading="lazy" class="w-full h-full object-cover" style="object-position:50% 50%">
+      </div>
+      <a href="https://www.instagram.com/hamburguesasundiez/" target="_blank" rel="noopener" class="aspect-square rounded-2xl border border-diezred/40 bg-[#1A1A1A] flex flex-col items-center justify-center text-center gap-2 p-4 card-hover" data-aos="fade-up">
+        <svg viewBox="0 0 24 24" class="w-8 h-8 fill-diezred"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM17.25 6a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
+        <p class="font-display font-bold text-sm sm:text-base leading-snug">¿Ya probaste las tuyas?</p>
+        <p class="text-white/60 text-xs sm:text-sm">Etiquetanos en Instagram <span class="text-diezgold font-semibold">@hamburguesasundiez</span> y sumate a la galería.</p>
+      </a>
+  </div>
+</section>
+
 <!-- WHATSAPP + QR -->
 <section class="max-w-4xl mx-auto px-4 sm:px-6 py-14 sm:py-20 text-center" data-aos="fade-up">
   <h2 class="font-display font-extrabold text-3xl sm:text-4xl">Pedí en Segundos</h2>
@@ -748,7 +847,7 @@
       </span>
       <span class="flex items-center gap-1.5 text-xs sm:text-sm text-white/70 font-medium whitespace-nowrap">
         <svg viewBox="0 0 24 24" class="w-4 h-4 fill-amber-500 shrink-0"><path d="M3 6a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v3h2.6a1 1 0 0 1 .86.49l2.4 4A1 1 0 0 1 20 15v2a1 1 0 0 1-1 1h-1a2.5 2.5 0 1 1-5 0H9a2.5 2.5 0 1 1-5 0H3a1 1 0 0 1-1-1V6zm12 4V7H4v8h.68A2.49 2.49 0 0 1 7 13.5c.98 0 1.84.5 2.32 1.5H13V10h2zm2 1v3.09A2.48 2.48 0 0 1 19 13.5c.35 0 .68.07 1 .19V15h-1v-1.3l-2.03-3.38L17 11z"/></svg>
-        Envíos a tu zona
+        Envíos a tu zona · <span class="cobro-badge bg-amber-400 text-black font-bold text-[11px] px-2 py-0.5 rounded-full">Consultá costo</span>
       </span>
     </div>
 
@@ -758,6 +857,20 @@
 
   </div>
 </footer>
+
+<!-- BARRA DEL CARRITO -->
+<div id="cart-bar" class="fixed bottom-0 inset-x-0 z-40 bg-[#161616]/95 backdrop-blur border-t border-diezgold/30 px-4 py-3">
+  <div class="max-w-4xl mx-auto flex items-center justify-between gap-3">
+    <div class="min-w-0 flex-1 leading-tight">
+      <p class="text-xs text-white/60"><span id="cart-count">0</span> <span id="cart-count-label">ítems</span> en tu pedido</p>
+      <p class="font-display font-black text-xl text-diezgold" id="cart-total">$0</p>
+    </div>
+    <div class="flex items-center gap-2 shrink-0">
+      <button type="button" id="cart-clear" class="text-xs text-white/50 hover:text-white underline px-1">Vaciar</button>
+      <a id="cart-send" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 transition-colors font-bold text-sm sm:text-base px-4 sm:px-5 py-3 rounded-full whitespace-nowrap">Enviar Pedido<span class="hidden sm:inline">&nbsp;por WhatsApp</span></a>
+    </div>
+  </div>
+</div>
 
 <!-- BOTÓN FLOTANTE DE WHATSAPP -->
 <a id="wa-float" href="#" target="_blank" rel="noopener" aria-label="Pedir por WhatsApp"
