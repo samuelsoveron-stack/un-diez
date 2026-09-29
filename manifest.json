@@ -1,0 +1,38 @@
+{
+  "name": "UN DIEZ · Hamburguesas Directo de Fábrica",
+  "short_name": "UN DIEZ",
+  "description": "Hamburguesas UN DIEZ, directo de fábrica en Villa Ballester. Combos de 10 carnes y 10 panes. Pedí por WhatsApp.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#111111",
+  "theme_color": "#E4342B",
+  "lang": "es-AR",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
