@@ -1,77 +1,16 @@
 // Configuración UN DIEZ — WhatsApp
-const WHATSAPP_NUMBER = "5491132644106"; // Número de fábrica (usado si no hay revendedor asociado)
+const WHATSAPP_NUMBER = "5491132644106";
 
-// Planilla de revendedores: Google Sheet publicada como CSV (Archivo > Compartir >
-// Publicar en la web > CSV), con columnas id,nombre,whatsapp. El dueño del negocio
-// da de alta o baja revendedores editando filas ahí, sin tocar código ni redeployar.
-const REVENDEDORES_SHEET_CSV_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQKzBVaBBtAJhL8fP9ndslkMx3ekE8NDDmLRG14yo3KVTi-IT4SNqdtALNZ5QqirkUotuEnpc8E7U5q/pub?output=csv";
-
-// Botones genéricos (header, hero, footer, flotante): el mensaje depende
-// del contexto de la página (retail vs. mayorista), marcado en <body data-context>.
 const MENSAJE_CONSULTA_GENERAL =
   "¡Hola *UN DIEZ*! 👋\nVi la página web y quería hacerles una consulta sobre sus productos.\n\n💬 *Mi consulta es:* ";
 
-const MENSAJE_MAYORISTA_GENERAL =
-  "¡Hola *UN DIEZ*! 🏭\nVi la propuesta para revendedores/mayoristas en la web y quisiera recibir información para mi zona.\n\n📋 *Localidad / Nombre del negocio:* ";
-
 function buildWhatsAppUrl(mensaje) {
-  const numero = localStorage.getItem("undiez_ref_wa") || WHATSAPP_NUMBER;
-  return `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
 }
 
-// Lee ?ref=id de la URL, lo valida contra la planilla de revendedores y persiste
-// el WhatsApp asociado en localStorage. Si el id no existe (o no hay planilla
-// configurada), no toca lo que ya estuviera guardado.
-async function gestionarRevendedor() {
-  const refParam = new URLSearchParams(window.location.search).get("ref");
-  if (!refParam || !REVENDEDORES_SHEET_CSV_URL) return;
-
-  try {
-    const url = new URL(REVENDEDORES_SHEET_CSV_URL);
-    url.searchParams.set("_", Date.now()); // evita CSV cacheado al editar la planilla
-    const respuesta = await fetch(url, { cache: "no-store" });
-    if (!respuesta.ok) return;
-
-    const revendedor = parseRevendedoresCsv(await respuesta.text())[refParam.trim().toLowerCase()];
-    if (!revendedor) return;
-
-    localStorage.setItem("undiez_ref_id", refParam);
-    localStorage.setItem("undiez_ref_wa", revendedor.whatsapp);
-    localStorage.setItem("undiez_ref_nombre", revendedor.nombre);
-  } catch (error) {
-    console.warn("No se pudo verificar el revendedor:", error);
-  }
-}
-
-function parseRevendedoresCsv(csv) {
-  const mapa = {};
-  csv.trim().split("\n").slice(1).forEach((fila) => {
-    const [id, nombre, whatsapp] = fila.split(",").map((valor) => valor?.trim());
-    if (id && whatsapp) {
-      mapa[id.toLowerCase()] = { nombre: nombre || id, whatsapp: whatsapp.replace(/\D/g, "") };
-    }
-  });
-  return mapa;
-}
-
-function mostrarBannerRevendedor() {
-  const nombre = localStorage.getItem("undiez_ref_nombre");
-  const banner = document.getElementById("revendedor-banner");
-  if (!nombre || !banner) return;
-  document.getElementById("revendedor-banner-nombre").textContent = nombre;
-  banner.classList.remove("hidden");
-}
-
-document.addEventListener("DOMContentLoaded", async () => {
-  await gestionarRevendedor();
-  mostrarBannerRevendedor();
-
-  const esMayorista = document.body.dataset.context === "mayorista";
-  const mensajeGenerico = esMayorista ? MENSAJE_MAYORISTA_GENERAL : MENSAJE_CONSULTA_GENERAL;
-
+document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("#wa-header, #wa-hero, #wa-footer, #wa-float").forEach((el) => {
-    el.href = buildWhatsAppUrl(mensajeGenerico);
+    el.href = buildWhatsAppUrl(MENSAJE_CONSULTA_GENERAL);
   });
 
   // Animaciones al hacer scroll
@@ -79,8 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     AOS.init({ once: true, duration: 700, easing: "ease-out-cubic" });
   }
 
-  // Botones con mensaje literal preconfigurado (combos minoristas y mayoristas,
-  // cada uno ya trae su texto exacto en data-mensaje).
+  // Botones con mensaje literal preconfigurado (cada combo ya trae su texto exacto en data-mensaje).
   document.querySelectorAll("[data-mensaje]").forEach((el) => {
     el.href = buildWhatsAppUrl(el.getAttribute("data-mensaje"));
   });
@@ -88,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // QR que abre el mismo chat genérico de WhatsApp que header/hero/footer/flotante
   const qrImg = document.getElementById("qr-code");
   if (qrImg) {
-    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=0&color=17-17-17&data=${encodeURIComponent(buildWhatsAppUrl(mensajeGenerico))}`;
+    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=0&color=17-17-17&data=${encodeURIComponent(buildWhatsAppUrl(MENSAJE_CONSULTA_GENERAL))}`;
     qrImg.src = qrApiUrl;
   }
 
