@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initCarousels();
   initCarrito();
+  initLightbox();
   actualizarHorarioBadge();
   setInterval(actualizarHorarioBadge, 60000);
 });
@@ -168,4 +169,42 @@ function initCarrito() {
     render();
   });
   render();
+}
+
+// Lightbox de la galería de clientes (clic/tap en una foto para ampliarla)
+function initLightbox() {
+  const slides = [...document.querySelectorAll(".galeria-slide img")];
+  const box = document.getElementById("lightbox");
+  if (!slides.length || !box) return;
+  const img = document.getElementById("lb-img");
+  let actual = 0;
+
+  const mostrar = (i) => {
+    actual = (i + slides.length) % slides.length;
+    img.src = slides[actual].src;
+    img.alt = slides[actual].alt;
+  };
+  const abrir = (i) => {
+    mostrar(i);
+    box.classList.remove("hidden");
+    box.classList.add("flex");
+    document.body.style.overflow = "hidden";
+  };
+  const cerrar = () => {
+    box.classList.add("hidden");
+    box.classList.remove("flex");
+    document.body.style.overflow = "";
+  };
+
+  slides.forEach((el, i) => el.parentElement.addEventListener("click", () => abrir(i)));
+  document.getElementById("lb-close").addEventListener("click", cerrar);
+  document.getElementById("lb-prev").addEventListener("click", () => mostrar(actual - 1));
+  document.getElementById("lb-next").addEventListener("click", () => mostrar(actual + 1));
+  box.addEventListener("click", (e) => { if (e.target === box) cerrar(); });
+  document.addEventListener("keydown", (e) => {
+    if (box.classList.contains("hidden")) return;
+    if (e.key === "Escape") cerrar();
+    if (e.key === "ArrowLeft") mostrar(actual - 1);
+    if (e.key === "ArrowRight") mostrar(actual + 1);
+  });
 }
