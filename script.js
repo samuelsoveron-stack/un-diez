@@ -46,21 +46,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Badge "Abiertos" / "Cerrado" según horario real de Villa Ballester (Lun a Sáb, 9 a 20 hs)
 function actualizarHorarioBadge() {
-  const badge = document.getElementById("horario-badge");
-  if (!badge) return;
+  const badges = document.querySelectorAll(".horario-badge");
+  if (!badges.length) return;
 
   const ahora = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Argentina/Buenos_Aires" }));
   const dia = ahora.getDay(); // 0 = domingo ... 6 = sábado
   const horaDecimal = ahora.getHours() + ahora.getMinutes() / 60;
   const abierto = dia >= 1 && dia <= 6 && horaDecimal >= 9 && horaDecimal < 20;
 
-  if (abierto) {
-    badge.textContent = "🟢 Abiertos";
-    badge.className = "shrink-0 text-xs font-bold px-3 py-1.5 rounded-full whitespace-nowrap bg-green-500/15 text-green-400 border border-green-500/40";
-  } else {
-    badge.textContent = "🌙 Cerrado (Tomando pedidos)";
-    badge.className = "shrink-0 text-xs font-bold px-3 py-1.5 rounded-full whitespace-nowrap bg-white/5 text-white/50 border border-white/15";
-  }
+  badges.forEach((badge) => {
+    if (abierto) {
+      badge.textContent = "🟢 Abiertos";
+      badge.className = "horario-badge shrink-0 w-fit mt-2 text-xs font-bold px-3 py-1.5 rounded-full whitespace-nowrap bg-green-500/15 text-green-400 border border-green-500/40";
+    } else {
+      badge.textContent = "🌙 Cerrado (Tomando pedidos)";
+      badge.className = "horario-badge shrink-0 w-fit mt-2 text-xs font-bold px-3 py-1.5 rounded-full whitespace-nowrap bg-white/5 text-white/50 border border-white/15";
+    }
+  });
 }
 
 // Carruseles de combos: flechas + dots sincronizados con el scroll horizontal
