@@ -288,6 +288,8 @@
   body.cart-open { padding-bottom:6rem; }
   @keyframes cobro-glow { 0%,100% { box-shadow:0 0 0 0 rgba(243,167,48,.55); } 50% { box-shadow:0 0 0 6px rgba(243,167,48,0); } }
   .cobro-badge { animation:cobro-glow 1.8s ease-in-out infinite; }
+  @keyframes promo-glow { 0%,100% { box-shadow:0 0 0 0 rgba(243,167,48,.6); transform:scale(1); } 50% { box-shadow:0 0 0 7px rgba(243,167,48,0); transform:scale(1.04); } }
+  .promo-badge { animation:promo-glow 1.6s ease-in-out infinite; }
 </style>
 </head>
 <body class="text-white antialiased">
@@ -447,7 +449,8 @@
 
     <div class="carousel-track overflow-x-auto snap-x snap-mandatory gap-6 pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:snap-none sm:pb-0">
 
-    <div class="min-w-[82vw] sm:min-w-0 snap-start card-hover combo-card rounded-3xl bg-diezcard border border-white/10 overflow-hidden flex flex-col" data-aos="fade-up" data-aos-duration="700">
+    <div class="min-w-[82vw] sm:min-w-0 snap-start card-hover combo-card rounded-3xl bg-diezcard border border-white/10 overflow-hidden flex flex-col relative" data-aos="fade-up" data-aos-duration="700">
+      <span class="promo-badge absolute top-3 left-3 z-10 bg-diezgold text-diezdark text-[11px] font-bold px-3 py-1 rounded-full shadow-lg">🍂 PROMO NOVIEMBRE</span>
       <div class="ingredient-collage aspect-[16/10]" style="grid-template-columns: 1fr 1fr;">
         <div>
           <img src="assets/medallones-fabrica.jpg" alt="10 medallones de carne fresca">
@@ -464,9 +467,10 @@
         <p class="mt-3 text-white/85 text-sm font-medium">🥩 10 Carnes &nbsp;|&nbsp; 🍞 10 Panes</p>
         <p class="mt-2 text-diezgold text-xs sm:text-sm font-semibold flex-1">✨ Pan de papa a elección: Sésamo o Parmesano (Mismo precio)</p>
         <div class="mt-6 flex items-end justify-between">
-          <span class="font-display font-black text-3xl sm:text-4xl text-diezgold">$18.000<span class="text-base font-semibold text-white/50">.-</span></span>
+          <span class="font-display font-black text-3xl sm:text-4xl text-diezgold">$16.000<span class="text-base font-semibold text-white/50">.-</span></span>
         </div>
-        <div class="combo-qty mt-6 flex items-center justify-between gap-3 bg-black/30 border border-white/10 rounded-full p-1.5" data-id="f1" data-nombre="Pack Familiar — Carne + Pan" data-precio="18000">
+        <p class="mt-1 text-diezgold/70 text-[11px] font-medium">Exclusivo solo por el mes de noviembre</p>
+        <div class="combo-qty mt-6 flex items-center justify-between gap-3 bg-black/30 border border-white/10 rounded-full p-1.5" data-id="f1" data-nombre="Pack Familiar — Carne + Pan" data-precio="16000">
           <span class="pl-4 text-sm font-semibold text-white/70">Cantidad</span>
           <div class="flex items-center gap-2">
             <button type="button" class="qty-btn bg-white/10 hover:bg-white/20" data-accion="menos" aria-label="Quitar uno">−</button>
@@ -479,6 +483,7 @@
 
     <div class="min-w-[82vw] sm:min-w-0 snap-start card-hover combo-card rounded-3xl bg-diezcard border border-diezgold/40 overflow-hidden flex flex-col relative" data-aos="fade-up" data-aos-duration="700" data-aos-delay="150">
       <span class="absolute top-3 right-3 z-10 bg-diezred text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-lg">CON CHEDDAR</span>
+      <span class="promo-badge absolute top-3 left-3 z-10 bg-diezgold text-diezdark text-[11px] font-bold px-3 py-1 rounded-full shadow-lg">🍂 PROMO NOVIEMBRE</span>
       <div class="ingredient-collage aspect-[16/10]" style="grid-template-columns: 1fr 1fr 1fr;">
         <div>
           <img src="assets/medallones-fabrica.jpg" alt="10 medallones de carne fresca">
@@ -499,9 +504,10 @@
         <p class="mt-3 text-white/85 text-sm font-medium">🥩 10 Carnes &nbsp;|&nbsp; 🍞 10 Panes &nbsp;|&nbsp; 🧀 10 Fetas de Cheddar</p>
         <p class="mt-2 text-diezgold text-xs sm:text-sm font-semibold flex-1">✨ Pan de papa a elección: Sésamo o Parmesano (Mismo precio)</p>
         <div class="mt-6 flex items-end justify-between">
-          <span class="font-display font-black text-3xl sm:text-4xl text-diezgold">$20.000<span class="text-base font-semibold text-white/50">.-</span></span>
+          <span class="font-display font-black text-3xl sm:text-4xl text-diezgold">$17.000<span class="text-base font-semibold text-white/50">.-</span></span>
         </div>
-        <div class="combo-qty mt-6 flex items-center justify-between gap-3 bg-black/30 border border-white/10 rounded-full p-1.5" data-id="f2" data-nombre="Pack Familiar — Cheddar" data-precio="20000">
+        <p class="mt-1 text-diezgold/70 text-[11px] font-medium">Exclusivo solo por el mes de noviembre</p>
+        <div class="combo-qty mt-6 flex items-center justify-between gap-3 bg-black/30 border border-white/10 rounded-full p-1.5" data-id="f2" data-nombre="Pack Familiar — Cheddar" data-precio="17000">
           <span class="pl-4 text-sm font-semibold text-white/70">Cantidad</span>
           <div class="flex items-center gap-2">
             <button type="button" class="qty-btn bg-white/10 hover:bg-white/20" data-accion="menos" aria-label="Quitar uno">−</button>
@@ -530,16 +536,18 @@
 
     <div class="carousel-track overflow-x-auto snap-x snap-mandatory gap-6 pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:snap-none sm:pb-0">
 
-    <div class="min-w-[82vw] sm:min-w-0 snap-start card-hover combo-card rounded-3xl bg-diezcard border border-amber-500/30 overflow-hidden flex flex-col" data-aos="fade-up" data-aos-duration="700">
+    <div class="min-w-[82vw] sm:min-w-0 snap-start card-hover combo-card rounded-3xl bg-diezcard border border-amber-500/30 overflow-hidden flex flex-col relative" data-aos="fade-up" data-aos-duration="700">
+      <span class="promo-badge absolute top-3 left-3 z-10 bg-diezgold text-diezdark text-[11px] font-bold px-3 py-1 rounded-full shadow-lg">🍂 PROMO NOVIEMBRE</span>
       <div class="p-7 sm:p-8 flex flex-col flex-1">
         <span class="inline-block w-fit bg-amber-500/10 text-amber-400 font-semibold text-xs px-2.5 py-1 rounded-full mb-4">🔥 Formato Express</span>
         <h3 class="font-display font-bold text-2xl">Pack Express — Carne + Pan</h3>
         <p class="mt-2 text-white/60 text-sm">5 medallones de carne fresca y 5 panes de papa a elección (Sésamo o Parmesano).</p>
         <p class="mt-3 text-white/85 text-sm font-medium flex-1">🥩 5 Carnes &nbsp;|&nbsp; 🍞 5 Panes</p>
         <div class="mt-6 flex items-end justify-between">
-          <span class="font-display font-black text-3xl sm:text-4xl text-diezgold">$10.000<span class="text-base font-semibold text-white/50">.-</span></span>
+          <span class="font-display font-black text-3xl sm:text-4xl text-diezgold">$9.000<span class="text-base font-semibold text-white/50">.-</span></span>
         </div>
-        <div class="combo-qty mt-6 flex items-center justify-between gap-3 bg-black/30 border border-white/10 rounded-full p-1.5" data-id="e1" data-nombre="Pack Express — Carne + Pan" data-precio="10000">
+        <p class="mt-1 text-diezgold/70 text-[11px] font-medium">Exclusivo solo por el mes de noviembre</p>
+        <div class="combo-qty mt-6 flex items-center justify-between gap-3 bg-black/30 border border-white/10 rounded-full p-1.5" data-id="e1" data-nombre="Pack Express — Carne + Pan" data-precio="9000">
           <span class="pl-4 text-sm font-semibold text-white/70">Cantidad</span>
           <div class="flex items-center gap-2">
             <button type="button" class="qty-btn bg-white/10 hover:bg-white/20" data-accion="menos" aria-label="Quitar uno">−</button>
@@ -552,15 +560,17 @@
     </div>
 
     <div class="min-w-[82vw] sm:min-w-0 snap-start card-hover combo-card rounded-3xl bg-diezcard border border-amber-500/30 overflow-hidden flex flex-col relative" data-aos="fade-up" data-aos-duration="700" data-aos-delay="150">
+      <span class="promo-badge absolute top-3 left-3 z-10 bg-diezgold text-diezdark text-[11px] font-bold px-3 py-1 rounded-full shadow-lg">🍂 PROMO NOVIEMBRE</span>
       <div class="p-7 sm:p-8 flex flex-col flex-1">
         <span class="inline-block w-fit bg-amber-500/10 text-amber-400 font-semibold text-xs px-2.5 py-1 rounded-full mb-4">🔥 Formato Express + Cheddar</span>
         <h3 class="font-display font-bold text-2xl">Pack Express — Cheddar</h3>
         <p class="mt-2 text-white/60 text-sm">5 medallones, 5 panes de papa a elección (Sésamo o Parmesano) y 5 fetas de cheddar.</p>
         <p class="mt-3 text-white/85 text-sm font-medium flex-1">🥩 5 Carnes &nbsp;|&nbsp; 🍞 5 Panes &nbsp;|&nbsp; 🧀 5 Fetas de Cheddar</p>
         <div class="mt-6 flex items-end justify-between">
-          <span class="font-display font-black text-3xl sm:text-4xl text-diezgold">$12.000<span class="text-base font-semibold text-white/50">.-</span></span>
+          <span class="font-display font-black text-3xl sm:text-4xl text-diezgold">$10.000<span class="text-base font-semibold text-white/50">.-</span></span>
         </div>
-        <div class="combo-qty mt-6 flex items-center justify-between gap-3 bg-black/30 border border-white/10 rounded-full p-1.5" data-id="e2" data-nombre="Pack Express — Cheddar" data-precio="12000">
+        <p class="mt-1 text-diezgold/70 text-[11px] font-medium">Exclusivo solo por el mes de noviembre</p>
+        <div class="combo-qty mt-6 flex items-center justify-between gap-3 bg-black/30 border border-white/10 rounded-full p-1.5" data-id="e2" data-nombre="Pack Express — Cheddar" data-precio="10000">
           <span class="pl-4 text-sm font-semibold text-white/70">Cantidad</span>
           <div class="flex items-center gap-2">
             <button type="button" class="qty-btn bg-white/10 hover:bg-white/20" data-accion="menos" aria-label="Quitar uno">−</button>
