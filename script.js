@@ -10,6 +10,11 @@ const REVENDEDORES_SHEET_CSV_URL =
 const MENSAJE_CONSULTA_GENERAL =
   "¡Hola *UN DIEZ*! 👋\nVi la página web y quería hacerles una consulta sobre sus productos.\n\n💬 *Mi consulta es:* ";
 
+// Minúsculas y sin acentos/ñ, para que ?ref=neca, ?ref=Ñeca y ?ref=%C3%B1eca encuentren el id "ñeca".
+function normalizarId(id) {
+  return id.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+}
+
 function buildWhatsAppUrl(mensaje) {
   const numero = localStorage.getItem("undiez_ref_wa") || WHATSAPP_NUMBER;
   return `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
@@ -28,7 +33,7 @@ async function gestionarRevendedor() {
     const respuesta = await fetch(url, { cache: "no-store" });
     if (!respuesta.ok) return;
 
-    const revendedor = parseRevendedoresCsv(await respuesta.text())[refParam.trim().toLowerCase()];
+    const revendedor = parseRevendedoresCsv(await respuesta.text())[normalizarId(refParam)];
     if (!revendedor) return;
 
     localStorage.setItem("undiez_ref_id", refParam);
@@ -44,7 +49,7 @@ function parseRevendedoresCsv(csv) {
   csv.trim().split("\n").slice(1).forEach((fila) => {
     const [id, nombre, whatsapp] = fila.split(",").map((valor) => valor?.trim());
     if (id && whatsapp) {
-      mapa[id.toLowerCase()] = { nombre: nombre || id, whatsapp: whatsapp.replace(/\D/g, "") };
+      mapa[normalizarId(id)] = { nombre: nombre || id, whatsapp: whatsapp.replace(/\D/g, "") };
     }
   });
   return mapa;
